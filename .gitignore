@@ -36,8 +36,7 @@
 #================
 
 # Generated files
-/Debug
-/Release
+/temp
 
 # Windows
 #========
