@@ -7,6 +7,8 @@
 #include "Assert\Assert.h"
 #include "Logger\Logger.h"
 #include "Math\MathUtil.h"
+#include "Math\Quaternion.h"
+#include "Math\Vec3D.h"
 #include "Math\Vec4D.h"
 
 namespace engine {
@@ -25,125 +27,155 @@ const Mat44 Mat44::ZERO(0.0f, 0.0f, 0.0f, 0.0f,
 Mat44::Mat44()
 {
 #ifdef BUILD_DEBUG
-    f11 = NAN;
+    m00 = NAN;
 #endif
+}
+
+Mat44::Mat44(float i_00, float i_01, float i_02, float i_03,
+             float i_10, float i_11, float i_12, float i_13,
+             float i_20, float i_21, float i_22, float i_23,
+             float i_30, float i_31, float i_32, float i_33) :
+    m00(i_00), m01(i_01), m02(i_02), m03(i_03),
+    m10(i_10), m11(i_11), m12(i_12), m13(i_13),
+    m20(i_20), m21(i_21), m22(i_22), m23(i_23),
+    m30(i_30), m31(i_31), m32(i_32), m33(i_33)
+{
+    ASSERT(!(IsNaN(i_00) || IsNaN(i_01) || IsNaN(i_02) || IsNaN(i_03)));
+    ASSERT(!(IsNaN(i_10) || IsNaN(i_11) || IsNaN(i_12) || IsNaN(i_13)));
+    ASSERT(!(IsNaN(i_20) || IsNaN(i_21) || IsNaN(i_22) || IsNaN(i_23)));
+    ASSERT(!(IsNaN(i_30) || IsNaN(i_31) || IsNaN(i_32) || IsNaN(i_33)));
+}
+
+Mat44::Mat44(const Quaternion& i_rotation, const Vec3D& i_translation) :
+    m03(i_translation.x()), m13(i_translation.y()), m23(i_translation.z()),
+    m30(0.0f), m31(0.0f), m32(0.0f), m33(1.0f)
+{
+    const auto _2x = i_rotation.x() + i_rotation.x();
+    const auto _2y = i_rotation.y() + i_rotation.y();
+    const auto _2z = i_rotation.z() + i_rotation.z();
+    const auto _2xx = i_rotation.x() * _2x;
+    const auto _2xy = _2x * i_rotation.y();
+    const auto _2xz = _2x * i_rotation.z();
+    const auto _2xw = _2x * i_rotation.w();
+    const auto _2yy = _2y * i_rotation.y();
+    const auto _2yz = _2y * i_rotation.z();
+    const auto _2yw = _2y * i_rotation.w();
+    const auto _2zz = _2z * i_rotation.z();
+    const auto _2zw = _2z * i_rotation.w();
+
+    m00 = 1.0f - _2yy - _2zz;
+    m01 = _2xy - _2zw;
+    m02 = _2xz + _2yw;
+
+    m10 = _2xy + _2zw;
+    m11 = 1.0f - _2xx - _2zz;
+    m12 = _2yz - _2xw;
+
+    m20 = _2xz - _2yw;
+    m21 = _2yz + _2xw;
+    m22 = 1.0f - _2xx - _2yy;
 }
 
 Mat44::~Mat44()
 {}
 
-Mat44::Mat44(float i_11, float i_12, float i_13, float i_14,
-    float i_21, float i_22, float i_23, float i_24,
-    float i_31, float i_32, float i_33, float i_34,
-    float i_41, float i_42, float i_43, float i_44) : 
-    f11(i_11), f12(i_12), f13(i_13), f14(i_14),
-    f21(i_21), f22(i_22), f23(i_23), f24(i_24),
-    f31(i_31), f32(i_32), f33(i_33), f34(i_34),
-    f41(i_41), f42(i_42), f43(i_43), f44(i_44)
+void Mat44::Set(float i_00, float i_01, float i_02, float i_03,
+                float i_10, float i_11, float i_12, float i_13,
+                float i_20, float i_21, float i_22, float i_23,
+                float i_30, float i_31, float i_32, float i_33)
 {
-    ASSERT(!(IsNaN(i_11) || IsNaN(i_12) || IsNaN(i_13) || IsNaN(i_14)));
-    ASSERT(!(IsNaN(i_21) || IsNaN(i_22) || IsNaN(i_23) || IsNaN(i_24)));
-    ASSERT(!(IsNaN(i_31) || IsNaN(i_32) || IsNaN(i_33) || IsNaN(i_34)));
-    ASSERT(!(IsNaN(i_41) || IsNaN(i_42) || IsNaN(i_43) || IsNaN(i_44)));
-}
+    ASSERT(!(IsNaN(i_00) || IsNaN(i_01) || IsNaN(i_02) || IsNaN(i_03)));
+    ASSERT(!(IsNaN(i_10) || IsNaN(i_11) || IsNaN(i_12) || IsNaN(i_13)));
+    ASSERT(!(IsNaN(i_20) || IsNaN(i_21) || IsNaN(i_22) || IsNaN(i_23)));
+    ASSERT(!(IsNaN(i_30) || IsNaN(i_31) || IsNaN(i_32) || IsNaN(i_33)));
 
-void Mat44::Set(float i_11, float i_12, float i_13, float i_14,
-    float i_21, float i_22, float i_23, float i_24,
-    float i_31, float i_32, float i_33, float i_34,
-    float i_41, float i_42, float i_43, float i_44)
-{
-    ASSERT(!(IsNaN(i_11) || IsNaN(i_12) || IsNaN(i_13) || IsNaN(i_14)));
-    ASSERT(!(IsNaN(i_21) || IsNaN(i_22) || IsNaN(i_23) || IsNaN(i_24)));
-    ASSERT(!(IsNaN(i_31) || IsNaN(i_32) || IsNaN(i_33) || IsNaN(i_34)));
-    ASSERT(!(IsNaN(i_41) || IsNaN(i_42) || IsNaN(i_43) || IsNaN(i_44)));
+    m00 = i_00;
+    m01 = i_01;
+    m02 = i_02;
+    m03 = i_03;
 
-    f11 = i_11;
-    f12 = i_12;
-    f13 = i_13;
-    f14 = i_14;
+    m10 = i_10;
+    m11 = i_11;
+    m12 = i_12;
+    m13 = i_13;
 
-    f21 = i_21;
-    f22 = i_22;
-    f23 = i_23;
-    f24 = i_24;
+    m20 = i_20;
+    m21 = i_21;
+    m22 = i_22;
+    m23 = i_23;
 
-    f31 = i_31;
-    f32 = i_32;
-    f33 = i_33;
-    f34 = i_34;
-
-    f41 = i_41;
-    f42 = i_42;
-    f43 = i_43;
-    f44 = i_44;
+    m30 = i_30;
+    m31 = i_31;
+    m32 = i_32;
+    m33 = i_33;
 }
 
 Mat44::Mat44(const Mat44& i_copy) :
-    f11(i_copy.f11), f12(i_copy.f12), f13(i_copy.f13), f14(i_copy.f14),
-    f21(i_copy.f21), f22(i_copy.f22), f23(i_copy.f23), f24(i_copy.f24),
-    f31(i_copy.f31), f32(i_copy.f32), f33(i_copy.f33), f34(i_copy.f34),
-    f41(i_copy.f41), f42(i_copy.f42), f43(i_copy.f43), f44(i_copy.f44)
+    m00(i_copy.m00), m01(i_copy.m01), m02(i_copy.m02), m03(i_copy.m03),
+    m10(i_copy.m10), m11(i_copy.m11), m12(i_copy.m12), m13(i_copy.m13),
+    m20(i_copy.m20), m21(i_copy.m21), m22(i_copy.m22), m23(i_copy.m23),
+    m30(i_copy.m30), m31(i_copy.m31), m32(i_copy.m32), m33(i_copy.m33)
 {}
 
 Mat44& Mat44::operator=(const Mat44& i_other)
 {
     if (this != &i_other)
     {
-        f11 = i_other.f11;
-        f12 = i_other.f12;
-        f13 = i_other.f13;
-        f14 = i_other.f14;
+        m00 = i_other.m00;
+        m01 = i_other.m01;
+        m02 = i_other.m02;
+        m03 = i_other.m03;
 
-        f21 = i_other.f21;
-        f22 = i_other.f22;
-        f23 = i_other.f23;
-        f24 = i_other.f24;
+        m10 = i_other.m10;
+        m11 = i_other.m11;
+        m12 = i_other.m12;
+        m13 = i_other.m13;
 
-        f31 = i_other.f31;
-        f32 = i_other.f32;
-        f33 = i_other.f33;
-        f34 = i_other.f34;
+        m20 = i_other.m20;
+        m21 = i_other.m21;
+        m22 = i_other.m22;
+        m23 = i_other.m23;
 
-        f41 = i_other.f41;
-        f42 = i_other.f42;
-        f43 = i_other.f43;
-        f44 = i_other.f44;
+        m30 = i_other.m30;
+        m31 = i_other.m31;
+        m32 = i_other.m32;
+        m33 = i_other.m33;
     }
     return *this;
 }
 
 float Mat44::GetDeterminant() const
 {
-    float a0 = f11 * f22 - f12 * f21;
-    float a1 = f11 * f23 - f13 * f21;
-    float a2 = f11 * f24 - f14 * f21;
-    float a3 = f12 * f23 - f13 * f22;
-    float a4 = f12 * f24 - f14 * f22;
-    float a5 = f13 * f24 - f14 * f23;
-    float b0 = f31 * f42 - f32 * f41;
-    float b1 = f31 * f43 - f33 * f41;
-    float b2 = f31 * f44 - f34 * f41;
-    float b3 = f32 * f43 - f33 * f42;
-    float b4 = f32 * f44 - f34 * f42;
-    float b5 = f33 * f44 - f34 * f43;
+    float a0 = m00 * m11 - m01 * m10;
+    float a1 = m00 * m12 - m02 * m10;
+    float a2 = m00 * m13 - m03 * m10;
+    float a3 = m01 * m12 - m02 * m11;
+    float a4 = m01 * m13 - m03 * m11;
+    float a5 = m02 * m13 - m03 * m12;
+    float b0 = m20 * m31 - m21 * m30;
+    float b1 = m20 * m32 - m22 * m30;
+    float b2 = m20 * m33 - m23 * m30;
+    float b3 = m21 * m32 - m22 * m31;
+    float b4 = m21 * m33 - m23 * m31;
+    float b5 = m22 * m33 - m23 * m32;
 
     return (a0 * b5 + a5 * b0 + a3 * b2 + a2 * b3 - a1 * b4 - a4 * b1);
 }
 
 void Mat44::Invert()
 {
-    float a0 = f11 * f22 - f12 * f21;
-    float a1 = f11 * f23 - f13 * f21;
-    float a2 = f11 * f24 - f14 * f21;
-    float a3 = f12 * f23 - f13 * f22;
-    float a4 = f12 * f24 - f14 * f22;
-    float a5 = f13 * f24 - f14 * f23;
-    float b0 = f31 * f42 - f32 * f41;
-    float b1 = f31 * f43 - f33 * f41;
-    float b2 = f31 * f44 - f34 * f41;
-    float b3 = f32 * f43 - f33 * f42;
-    float b4 = f32 * f44 - f34 * f42;
-    float b5 = f33 * f44 - f34 * f43;
+    float a0 = m00 * m11 - m01 * m10;
+    float a1 = m00 * m12 - m02 * m10;
+    float a2 = m00 * m13 - m03 * m10;
+    float a3 = m01 * m12 - m02 * m11;
+    float a4 = m01 * m13 - m03 * m11;
+    float a5 = m02 * m13 - m03 * m12;
+    float b0 = m20 * m31 - m21 * m30;
+    float b1 = m20 * m32 - m22 * m30;
+    float b2 = m20 * m33 - m23 * m30;
+    float b3 = m21 * m32 - m22 * m31;
+    float b4 = m21 * m33 - m23 * m31;
+    float b5 = m22 * m33 - m23 * m32;
 
     float det = a0 * b5 + a5 * b0 + a3 * b2 + a2 * b3 - a1 * b4 - a4 * b1;
 
@@ -154,50 +186,50 @@ void Mat44::Invert()
     }
 
     Mat44 adjoin;
-    adjoin.f11 =  f22 * b5 - f23 * b4 + f24 * b3;
-    adjoin.f12 = -f12 * b5 + f13 * b4 - f14 * b3;
-    adjoin.f13 =  f42 * a5 - f43 * a4 + f44 * a3;
-    adjoin.f14 = -f32 * a5 + f33 * a4 - f34 * a3;
+    adjoin.m00 =  m11 * b5 - m12 * b4 + m13 * b3;
+    adjoin.m01 = -m01 * b5 + m02 * b4 - m03 * b3;
+    adjoin.m02 =  m31 * a5 - m32 * a4 + m33 * a3;
+    adjoin.m03 = -m21 * a5 + m22 * a4 - m23 * a3;
 
-    adjoin.f21 = -f21 * b5 + f23 * b2 - f24 * b1;
-    adjoin.f22 =  f11 * b5 - f13 * b2 + f14 * b1;
-    adjoin.f23 = -f41 * a5 + f43 * a2 - f44 * a1;
-    adjoin.f24 =  f31 * a5 - f33 * a2 + f34 * a1;
+    adjoin.m10 = -m10 * b5 + m12 * b2 - m13 * b1;
+    adjoin.m11 =  m00 * b5 - m02 * b2 + m03 * b1;
+    adjoin.m12 = -m30 * a5 + m32 * a2 - m33 * a1;
+    adjoin.m13 =  m20 * a5 - m22 * a2 + m23 * a1;
 
-    adjoin.f31 =  f21 * b4 - f22 * b2 + f24 * b0;
-    adjoin.f32 = -f11 * b4 + f12 * b2 - f14 * b0;
-    adjoin.f33 =  f41 * a4 - f42 * a2 + f44 * a0;
-    adjoin.f34 = -f31 * a4 + f32 * a2 - f34 * a0;
+    adjoin.m20 =  m10 * b4 - m11 * b2 + m13 * b0;
+    adjoin.m21 = -m00 * b4 + m01 * b2 - m03 * b0;
+    adjoin.m22 =  m30 * a4 - m31 * a2 + m33 * a0;
+    adjoin.m23 = -m20 * a4 + m21 * a2 - m23 * a0;
 
-    adjoin.f41 = -f21 * b3 + f22 * b1 - f23 * b0;
-    adjoin.f42 =  f11 * b3 - f12 * b1 + f13 * b0;
-    adjoin.f43 = -f41 * a3 + f42 * a1 - f43 * a0;
-    adjoin.f44 =  f31 * a3 - f32 * a1 + f33 * a0;
+    adjoin.m30 = -m10 * b3 + m11 * b1 - m12 * b0;
+    adjoin.m31 =  m00 * b3 - m01 * b1 + m02 * b0;
+    adjoin.m32 = -m30 * a3 + m31 * a1 - m32 * a0;
+    adjoin.m33 =  m20 * a3 - m21 * a1 + m22 * a0;
 
     // only divide by determinant if determinant is not 1
     if (!FuzzyEquals(det, 1.0f))
     {
         float inverse_det = 1.0f / det;
 
-        adjoin.f11 *= inverse_det;
-        adjoin.f12 *= inverse_det;
-        adjoin.f13 *= inverse_det;
-        adjoin.f14 *= inverse_det;
+        adjoin.m00 *= inverse_det;
+        adjoin.m01 *= inverse_det;
+        adjoin.m02 *= inverse_det;
+        adjoin.m03 *= inverse_det;
 
-        adjoin.f21 *= inverse_det;
-        adjoin.f22 *= inverse_det;
-        adjoin.f23 *= inverse_det;
-        adjoin.f24 *= inverse_det;
+        adjoin.m10 *= inverse_det;
+        adjoin.m11 *= inverse_det;
+        adjoin.m12 *= inverse_det;
+        adjoin.m13 *= inverse_det;
 
-        adjoin.f31 *= inverse_det;
-        adjoin.f32 *= inverse_det;
-        adjoin.f33 *= inverse_det;
-        adjoin.f34 *= inverse_det;
+        adjoin.m20 *= inverse_det;
+        adjoin.m21 *= inverse_det;
+        adjoin.m22 *= inverse_det;
+        adjoin.m23 *= inverse_det;
 
-        adjoin.f41 *= inverse_det;
-        adjoin.f42 *= inverse_det;
-        adjoin.f43 *= inverse_det;
-        adjoin.f44 *= inverse_det;
+        adjoin.m30 *= inverse_det;
+        adjoin.m31 *= inverse_det;
+        adjoin.m32 *= inverse_det;
+        adjoin.m33 *= inverse_det;
     }
 
     *this = adjoin;
@@ -212,29 +244,29 @@ Mat44 Mat44::GetInverse() const
 
 void Mat44::Transpose()
 {
-    float temp = f21;
-    f21 = f12;
-    f12 = temp;
+    float temp = m10;
+    m10 = m01;
+    m01 = temp;
 
-    temp = f31;
-    f31 = f13;
-    f13 = temp;
+    temp = m20;
+    m20 = m02;
+    m02 = temp;
 
-    temp = f41;
-    f41 = f14;
-    f14 = temp;
+    temp = m30;
+    m30 = m03;
+    m03 = temp;
 
-    temp = f32;
-    f32 = f23;
-    f23 = temp;
+    temp = m21;
+    m21 = m12;
+    m12 = temp;
 
-    temp = f42;
-    f42 = f24;
-    f24 = temp;
+    temp = m31;
+    m31 = m13;
+    m13 = temp;
 
-    temp = f43;
-    f43 = f34;
-    f34 = temp;
+    temp = m32;
+    m32 = m23;
+    m23 = temp;
 }
 
 Mat44 Mat44::GetTranspose() const
@@ -264,10 +296,10 @@ bool Mat44::operator==(const Mat44& i_other) const
         return true;
     }
 
-    return !(!FuzzyEquals(f11, i_other.f11) || !FuzzyEquals(f12, i_other.f12) || !FuzzyEquals(f13, i_other.f13) || !FuzzyEquals(f14, i_other.f14) ||
-             !FuzzyEquals(f21, i_other.f21) || !FuzzyEquals(f22, i_other.f22) || !FuzzyEquals(f23, i_other.f23) || !FuzzyEquals(f24, i_other.f24) ||
-             !FuzzyEquals(f31, i_other.f31) || !FuzzyEquals(f32, i_other.f32) || !FuzzyEquals(f33, i_other.f33) || !FuzzyEquals(f34, i_other.f34) ||
-             !FuzzyEquals(f41, i_other.f41) || !FuzzyEquals(f42, i_other.f42) || !FuzzyEquals(f43, i_other.f43) || !FuzzyEquals(f44, i_other.f44));
+    return !(!FuzzyEquals(m00, i_other.m00) || !FuzzyEquals(m01, i_other.m01) || !FuzzyEquals(m02, i_other.m02) || !FuzzyEquals(m03, i_other.m03) ||
+             !FuzzyEquals(m10, i_other.m10) || !FuzzyEquals(m11, i_other.m11) || !FuzzyEquals(m12, i_other.m12) || !FuzzyEquals(m13, i_other.m13) ||
+             !FuzzyEquals(m20, i_other.m20) || !FuzzyEquals(m21, i_other.m21) || !FuzzyEquals(m22, i_other.m22) || !FuzzyEquals(m23, i_other.m23) ||
+             !FuzzyEquals(m30, i_other.m30) || !FuzzyEquals(m31, i_other.m31) || !FuzzyEquals(m32, i_other.m32) || !FuzzyEquals(m33, i_other.m33));
 }
 
 // this * i_right_mat
@@ -275,25 +307,25 @@ Mat44 Mat44::Multiply(const Mat44& i_right_mat) const
 {
     Mat44 result;
 
-    result.f11 = f11 * i_right_mat.f11 + f12 * i_right_mat.f21 + f13 * i_right_mat.f31 + f14 * i_right_mat.f41;
-    result.f12 = f11 * i_right_mat.f12 + f12 * i_right_mat.f22 + f13 * i_right_mat.f32 + f14 * i_right_mat.f42;
-    result.f13 = f11 * i_right_mat.f13 + f12 * i_right_mat.f23 + f13 * i_right_mat.f33 + f14 * i_right_mat.f43;
-    result.f14 = f11 * i_right_mat.f14 + f12 * i_right_mat.f24 + f13 * i_right_mat.f34 + f14 * i_right_mat.f44;
+    result.m00 = m00 * i_right_mat.m00 + m01 * i_right_mat.m10 + m02 * i_right_mat.m20 + m03 * i_right_mat.m30;
+    result.m01 = m00 * i_right_mat.m01 + m01 * i_right_mat.m11 + m02 * i_right_mat.m21 + m03 * i_right_mat.m31;
+    result.m02 = m00 * i_right_mat.m02 + m01 * i_right_mat.m12 + m02 * i_right_mat.m22 + m03 * i_right_mat.m32;
+    result.m03 = m00 * i_right_mat.m03 + m01 * i_right_mat.m13 + m02 * i_right_mat.m23 + m03 * i_right_mat.m33;
 
-    result.f21 = f21 * i_right_mat.f11 + f22 * i_right_mat.f21 + f23 * i_right_mat.f31 + f24 * i_right_mat.f41;
-    result.f22 = f21 * i_right_mat.f12 + f22 * i_right_mat.f22 + f23 * i_right_mat.f32 + f24 * i_right_mat.f42;
-    result.f23 = f21 * i_right_mat.f13 + f22 * i_right_mat.f23 + f23 * i_right_mat.f33 + f24 * i_right_mat.f43;
-    result.f24 = f21 * i_right_mat.f14 + f22 * i_right_mat.f24 + f23 * i_right_mat.f34 + f24 * i_right_mat.f44;
+    result.m10 = m10 * i_right_mat.m00 + m11 * i_right_mat.m10 + m12 * i_right_mat.m20 + m13 * i_right_mat.m30;
+    result.m11 = m10 * i_right_mat.m01 + m11 * i_right_mat.m11 + m12 * i_right_mat.m21 + m13 * i_right_mat.m31;
+    result.m12 = m10 * i_right_mat.m02 + m11 * i_right_mat.m12 + m12 * i_right_mat.m22 + m13 * i_right_mat.m32;
+    result.m13 = m10 * i_right_mat.m03 + m11 * i_right_mat.m13 + m12 * i_right_mat.m23 + m13 * i_right_mat.m33;
 
-    result.f31 = f31 * i_right_mat.f11 + f32 * i_right_mat.f21 + f33 * i_right_mat.f31 + f34 * i_right_mat.f41;
-    result.f32 = f31 * i_right_mat.f12 + f32 * i_right_mat.f22 + f33 * i_right_mat.f32 + f34 * i_right_mat.f42;
-    result.f33 = f31 * i_right_mat.f13 + f32 * i_right_mat.f23 + f33 * i_right_mat.f33 + f34 * i_right_mat.f43;
-    result.f34 = f31 * i_right_mat.f14 + f32 * i_right_mat.f24 + f33 * i_right_mat.f34 + f34 * i_right_mat.f44;
+    result.m20 = m20 * i_right_mat.m00 + m21 * i_right_mat.m10 + m22 * i_right_mat.m20 + m23 * i_right_mat.m30;
+    result.m21 = m20 * i_right_mat.m01 + m21 * i_right_mat.m11 + m22 * i_right_mat.m21 + m23 * i_right_mat.m31;
+    result.m22 = m20 * i_right_mat.m02 + m21 * i_right_mat.m12 + m22 * i_right_mat.m22 + m23 * i_right_mat.m32;
+    result.m23 = m20 * i_right_mat.m03 + m21 * i_right_mat.m13 + m22 * i_right_mat.m23 + m23 * i_right_mat.m33;
 
-    result.f41 = f41 * i_right_mat.f11 + f42 * i_right_mat.f21 + f43 * i_right_mat.f31 + f44 * i_right_mat.f41;
-    result.f42 = f41 * i_right_mat.f12 + f42 * i_right_mat.f22 + f43 * i_right_mat.f32 + f44 * i_right_mat.f42;
-    result.f43 = f41 * i_right_mat.f13 + f42 * i_right_mat.f23 + f43 * i_right_mat.f33 + f44 * i_right_mat.f43;
-    result.f44 = f41 * i_right_mat.f14 + f42 * i_right_mat.f24 + f43 * i_right_mat.f34 + f44 * i_right_mat.f44;
+    result.m30 = m30 * i_right_mat.m00 + m31 * i_right_mat.m10 + m32 * i_right_mat.m20 + m33 * i_right_mat.m30;
+    result.m31 = m30 * i_right_mat.m01 + m31 * i_right_mat.m11 + m32 * i_right_mat.m21 + m33 * i_right_mat.m31;
+    result.m32 = m30 * i_right_mat.m02 + m31 * i_right_mat.m12 + m32 * i_right_mat.m22 + m33 * i_right_mat.m32;
+    result.m33 = m30 * i_right_mat.m03 + m31 * i_right_mat.m13 + m32 * i_right_mat.m23 + m33 * i_right_mat.m33;
 
     return result;
 }
@@ -303,10 +335,10 @@ Vec4D Mat44::MultiplyLeft(const Vec4D& i_left_vec4) const
 {
     Vec4D result;
 
-    result.x(i_left_vec4.x() * f11 + i_left_vec4.y() * f21 + i_left_vec4.z() * f31 + i_left_vec4.w() * f41);
-    result.y(i_left_vec4.x() * f12 + i_left_vec4.y() * f22 + i_left_vec4.z() * f32 + i_left_vec4.w() * f42);
-    result.z(i_left_vec4.x() * f13 + i_left_vec4.y() * f23 + i_left_vec4.z() * f33 + i_left_vec4.w() * f43);
-    result.w(i_left_vec4.x() * f14 + i_left_vec4.y() * f24 + i_left_vec4.z() * f34 + i_left_vec4.w() * f44);
+    result.x(i_left_vec4.x() * m00 + i_left_vec4.y() * m10 + i_left_vec4.z() * m20 + i_left_vec4.w() * m30);
+    result.y(i_left_vec4.x() * m01 + i_left_vec4.y() * m11 + i_left_vec4.z() * m21 + i_left_vec4.w() * m31);
+    result.z(i_left_vec4.x() * m02 + i_left_vec4.y() * m12 + i_left_vec4.z() * m22 + i_left_vec4.w() * m32);
+    result.w(i_left_vec4.x() * m03 + i_left_vec4.y() * m13 + i_left_vec4.z() * m23 + i_left_vec4.w() * m33);
 
     return result;
 }
@@ -316,10 +348,10 @@ Vec4D Mat44::MultiplyRight(const Vec4D& i_right_vec4) const
 {
     Vec4D result;
 
-    result.x(f11 * i_right_vec4.x() + f12 * i_right_vec4.y() + f13 * i_right_vec4.z() + f14 * i_right_vec4.w());
-    result.y(f21 * i_right_vec4.x() + f22 * i_right_vec4.y() + f23 * i_right_vec4.z() + f24 * i_right_vec4.w());
-    result.z(f31 * i_right_vec4.x() + f32 * i_right_vec4.y() + f33 * i_right_vec4.z() + f34 * i_right_vec4.w());
-    result.w(f41 * i_right_vec4.x() + f42 * i_right_vec4.y() + f43 * i_right_vec4.z() + f44 * i_right_vec4.w());
+    result.x(m00 * i_right_vec4.x() + m01 * i_right_vec4.y() + m02 * i_right_vec4.z() + m03 * i_right_vec4.w());
+    result.y(m10 * i_right_vec4.x() + m11 * i_right_vec4.y() + m12 * i_right_vec4.z() + m13 * i_right_vec4.w());
+    result.z(m20 * i_right_vec4.x() + m21 * i_right_vec4.y() + m22 * i_right_vec4.z() + m23 * i_right_vec4.w());
+    result.w(m30 * i_right_vec4.x() + m31 * i_right_vec4.y() + m32 * i_right_vec4.z() + m33 * i_right_vec4.w());
 
     return result;
 }
@@ -328,10 +360,10 @@ Vec4D Mat44::MultiplyRight(const Vec4D& i_right_vec4) const
 void Mat44::Print() const
 {
     LOG("\n%f, \t%f, \t%f, \t%f\n%f, \t%f, \t%f, \t%f\n%f, \t%f, \t%f, \t%f\n%f, \t%f, \t%f, \t%f",
-        f11, f12, f13, f14,
-        f21, f22, f23, f24,
-        f31, f32, f33, f34,
-        f41, f42, f43, f44);
+        m00, m01, m02, m03,
+        m10, m11, m12, m13,
+        m20, m21, m22, m23,
+        m30, m31, m32, m33);
 }
 #endif
 

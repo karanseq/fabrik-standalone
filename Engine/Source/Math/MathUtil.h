@@ -5,8 +5,8 @@
 #include <math.h>
 
 #define M_PI                    3.14159265358979323846f  /* pi */
-#define MIN_EPSILON             0.000000001f
-#define MAX_EPSILON             0.0001f
+#define MIN_EPSILON             1.0e-9f
+#define MAX_EPSILON             1.0e-3f
 
 namespace engine {
 namespace math {
@@ -14,6 +14,7 @@ namespace math {
 // forward declarations
 struct AABB;
 class Mat44;
+class Quaternion;
 class Transform;
 class Vec2D;
 class Vec3D;
@@ -68,6 +69,7 @@ inline float GetMaxOfFour(float i_first, float i_second, float i_third, float i_
 float DotProduct(const Vec2D& i_v1, const Vec2D& i_v2);
 float DotProduct(const Vec3D& i_v1, const Vec3D& i_v2);
 float DotProduct(const engine::math::optimized::Vec3D& i_v1, const engine::math::optimized::Vec3D& i_v2);
+float DotProduct(const Quaternion& i_q1, const Quaternion& i_q2);
 
 // cross product
 Vec3D CrossProduct(const Vec3D& i_v1, const Vec3D& i_v2);

@@ -5,7 +5,7 @@ namespace math {
 
 inline bool Mat44::IsValid() const
 {
-    return !IsNaN(f11);
+    return !IsNaN(m00);
 }
 
 inline Mat44::operator bool() const

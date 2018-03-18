@@ -16,8 +16,7 @@ namespace math {
         explicit Size(float i_width = 0.0f, float i_height = 0.0f);
         Size(const Size& i_copy);
 
-        ~Size()
-        {}
+        ~Size() = default;
 
         // accessors and mutators
         inline float width() const;

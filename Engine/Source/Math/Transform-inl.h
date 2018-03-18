@@ -15,6 +15,16 @@ namespace math {
         return *this;
     }
 
+    inline const Quaternion& Transform::GetRotation() const
+    {
+        return rotation_;
+    }
+
+    inline void Transform::SetRotation(const Quaternion& i_rotation)
+    {
+        rotation_ = i_rotation;
+    }
+
     inline const Vec3D& Transform::GetPosition() const
     {
         return position_;
@@ -25,22 +35,12 @@ namespace math {
         position_ = i_position;
     }
 
-    inline const Vec3D& Transform::GetRotation() const
-    {
-        return rotation_;
-    }
-
-    inline void Transform::SetRotation(const Vec3D& i_rotation)
-    {
-        rotation_ = i_rotation;
-    }
-
-    inline const Vec3D& Transform::GetScale() const
+    inline float Transform::GetScale() const
     {
         return scale_;
     }
 
-    inline void Transform::SetScale(const Vec3D& i_scale)
+    inline void Transform::SetScale(float i_scale)
     {
         scale_ = i_scale;
     }

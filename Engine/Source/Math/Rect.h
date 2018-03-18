@@ -20,8 +20,7 @@ namespace math {
         explicit Rect(const Vec2D& i_origin = Vec2D::ZERO, const Size& i_size = Size::ZERO);
         Rect(const Rect& i_copy);
 
-        ~Rect()
-        {}
+        ~Rect() = default;
 
         // accessors and mutators
         inline void SetRect(float i_x, float i_y, float i_width, float i_height);

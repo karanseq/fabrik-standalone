@@ -6,20 +6,25 @@
 namespace engine {
 namespace math {
 
+// forward declarations
+class Quaternion;
+class Vec3D;
+
 class Mat44
 {
 public:
     explicit Mat44();
-    explicit Mat44(float i_11, float i_12, float i_13, float i_14,
-                   float i_21, float i_22, float i_23, float i_24,
-                   float i_31, float i_32, float i_33, float i_34,
-                   float i_41, float i_42, float i_43, float i_44);
+    explicit Mat44(float i_00, float i_01, float i_02, float i_03,
+                   float i_10, float i_11, float i_12, float i_13,
+                   float i_20, float i_21, float i_22, float i_23,
+                   float i_30, float i_31, float i_32, float i_33);
+    explicit Mat44(const Quaternion& i_rotation, const Vec3D& i_translation);
     ~Mat44();
 
-    void Set(float i_11, float i_12, float i_13, float i_14,
-             float i_21, float i_22, float i_23, float i_24,
-             float i_31, float i_32, float i_33, float i_34,
-             float i_41, float i_42, float i_43, float i_44);
+    void Set(float i_00, float i_01, float i_02, float i_03,
+             float i_10, float i_11, float i_12, float i_13,
+             float i_20, float i_21, float i_22, float i_23,
+             float i_30, float i_31, float i_32, float i_33);
 
     // copy constructor
     Mat44(const Mat44& i_copy);
@@ -75,10 +80,10 @@ public:
     static const Mat44 ZERO;
 
 private:
-    float       f11, f12, f13, f14;
-    float       f21, f22, f23, f24;
-    float       f31, f32, f33, f34;
-    float       f41, f42, f43, f44;
+    float       m00, m01, m02, m03;
+    float       m10, m11, m12, m13;
+    float       m20, m21, m22, m23;
+    float       m30, m31, m32, m33;
 
 }; // class Mat44
 

@@ -20,8 +20,7 @@ public:
     explicit Vec4D(const Vec3D& i_vec3, float i_w = 0.0f);
     Vec4D(const Vec4D& i_copy);
 
-    ~Vec4D()
-    {}
+    ~Vec4D() = default;
 
     // accessors and mutators
     inline float x() const;

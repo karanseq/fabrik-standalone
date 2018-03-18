@@ -333,6 +333,8 @@
     <ClInclude Include="Source\Math\Mat44-SSE.h" />
     <ClInclude Include="Source\Math\Mat44.h" />
     <ClInclude Include="Source\Math\MathUtil.h" />
+    <ClInclude Include="Source\Math\Quaternion-inl.h" />
+    <ClInclude Include="Source\Math\Quaternion.h" />
     <ClInclude Include="Source\Math\Rect-inl.h" />
     <ClInclude Include="Source\Math\Rect.h" />
     <ClInclude Include="Source\Math\Size-inl.h" />
@@ -362,6 +364,7 @@
     <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Mat44.cpp" />
     <ClCompile Include="Source\Math\Private\MathUtil.cpp" />
+    <ClCompile Include="Source\Math\Private\Quaternion.cpp" />
     <ClCompile Include="Source\Math\Private\Rect.cpp" />
     <ClCompile Include="Source\Math\Private\Size.cpp" />
     <ClCompile Include="Source\Math\Private\Transform.cpp" />

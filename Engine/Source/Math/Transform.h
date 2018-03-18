@@ -1,6 +1,7 @@
 #ifndef ENGINE_TRANSFORM_H_
 #define ENGINE_TRANSFORM_H_
 
+#include "Quaternion.h"
 #include "Vec3D.h"
 
 namespace engine {
@@ -14,30 +15,31 @@ namespace math {
     class Transform
     {
     public:
-        explicit Transform(Vec3D i_position = Vec3D::ZERO, Vec3D i_rotation = Vec3D::ZERO, Vec3D i_scale = Vec3D::UNIT);
+        explicit Transform(const Quaternion& i_rotation = Quaternion::IDENTITY,
+            const Vec3D& i_position = Vec3D::ZERO,
+            float i_scale = 1.0f);
         Transform(const Transform& i_copy);
 
-        ~Transform()
-        {}
+        ~Transform() = default;
 
         // assignment
         inline Transform& operator=(const Transform& i_transform);
 
         // accessors and mutators
+        inline const Quaternion& GetRotation() const;
+        inline void SetRotation(const Quaternion& i_rotation);
         inline const Vec3D& GetPosition() const;
         inline void SetPosition(const Vec3D& i_position);
-        inline const Vec3D& GetRotation() const;
-        inline void SetRotation(const Vec3D& i_rotation);
-        inline const Vec3D& GetScale() const;
-        inline void SetScale(const Vec3D& i_scale);
+        inline float GetScale() const;
+        inline void SetScale(float i_scale);
 
         // constants
         static const Transform          ZERO;
 
     protected:
-        Vec3D position_;
-        Vec3D rotation_;
-        Vec3D scale_;
+        Quaternion                      rotation_;
+        Vec3D                           position_;
+        float                           scale_;
 
     }; // class Transform
 

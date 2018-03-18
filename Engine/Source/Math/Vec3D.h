@@ -22,8 +22,7 @@ public:
     Vec3D(const engine::math::optimized::Vec3D& i_copy);
     Vec3D(const Vec3D& i_copy);
 
-    ~Vec3D()
-    {}
+    ~Vec3D() = default;
 
     // accessors and mutators
     inline float x() const;
