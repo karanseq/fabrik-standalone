@@ -35,7 +35,9 @@ namespace graphics {
         }; // struct InitParams
 
     public:
-        static void Init(const InitParams& i_params);
+        static bool Init(const InitParams& i_params);
+        static void Run();
+        static bool Shutdown();
 
     private:
         GLUTHelper() = delete;

@@ -24,5 +24,13 @@
     <ClCompile Include="Source\Demo\Private\EntryPoint.cpp">
       <Filter>Source Files\Demo</Filter>
     </ClCompile>
+    <ClCompile Include="Source\Demo\Private\DemoApplication.cpp">
+      <Filter>Source Files\Demo</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Demo\DemoApplication.h">
+      <Filter>Header Files\Demo</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,9 +11,8 @@
 namespace engine {
 namespace graphics{
 
-    void GLUTHelper::Init(const InitParams& i_params)
+    bool GLUTHelper::Init(const InitParams& i_params)
     {
-        ASSERT(i_params.pargc);
         ASSERT(i_params.argv);
         ASSERT(i_params.window_title);
 
@@ -34,14 +33,26 @@ namespace graphics{
         if (GLEW_OK != err)
         {
             LOG_ERROR("glewInit error:%s", glewGetErrorString(err));
-            return;
+            return false;
         }
 
+        // Setup callbacks
         glutDisplayFunc(i_params.display_func);
         glutIdleFunc(i_params.idle_func);
         glutKeyboardFunc(i_params.keyboard_func);
 
+        return true;
+    }
+
+    void GLUTHelper::Run()
+    {
         glutMainLoop();
+    }
+
+    bool GLUTHelper::Shutdown()
+    {
+        glutLeaveMainLoop();
+        return true;
     }
 
 } // namespace graphics
