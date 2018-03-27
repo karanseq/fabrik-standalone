@@ -43,12 +43,6 @@
     <Filter Include="Source Files\Graphics">
       <UniqueIdentifier>{e8e2b795-2cd4-4f96-86b3-2855d993aab5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Renderer">
-      <UniqueIdentifier>{53610f64-045c-43d3-b26d-018d520afad3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Renderer">
-      <UniqueIdentifier>{1a22d16d-fd53-4ac8-ba4c-91a870ef5cd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Application">
       <UniqueIdentifier>{b0e5bff7-8288-4717-953c-97d6978b27d6}</UniqueIdentifier>
     </Filter>
@@ -144,9 +138,6 @@
     <ClInclude Include="Source\Graphics\GLUTHelper.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Renderer\Renderer.h">
-      <Filter>Header Files\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Application\Application.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
@@ -158,6 +149,9 @@
     </ClInclude>
     <ClInclude Include="Source\Math\Quaternion-inl.h">
       <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Graphics\Renderer.h">
+      <Filter>Header Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -209,9 +203,6 @@
     <ClCompile Include="Source\Graphics\Private\GLUTHelper.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Renderer\Private\Renderer.cpp">
-      <Filter>Source Files\Renderer</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Application\Private\GLApplication.cpp">
       <Filter>Source Files\Application</Filter>
     </ClCompile>
@@ -220,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="Source\Math\Private\Quaternion.cpp">
       <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Private\Renderer.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

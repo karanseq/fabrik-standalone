@@ -326,6 +326,7 @@
     <ClInclude Include="Source\Assert\Assert.h" />
     <ClInclude Include="Source\Common\HelperMacros.h" />
     <ClInclude Include="Source\Graphics\GLUTHelper.h" />
+    <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Logger\Logger.h" />
     <ClInclude Include="Source\Math\AABB.h" />
     <ClInclude Include="Source\Math\Mat44-inl.h" />
@@ -351,7 +352,6 @@
     <ClInclude Include="Source\Math\Vec4D-SSE-inl.h" />
     <ClInclude Include="Source\Math\Vec4D-SSE.h" />
     <ClInclude Include="Source\Math\Vec4D.h" />
-    <ClInclude Include="Source\Renderer\Renderer.h" />
     <ClInclude Include="Source\Time\InterfaceTickable.h" />
     <ClInclude Include="Source\Time\TimerUtil.h" />
   </ItemGroup>
@@ -359,6 +359,7 @@
     <ClCompile Include="Source\Application\Private\Application.cpp" />
     <ClCompile Include="Source\Application\Private\GLApplication.cpp" />
     <ClCompile Include="Source\Graphics\Private\GLUTHelper.cpp" />
+    <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
     <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp" />
@@ -373,7 +374,6 @@
     <ClCompile Include="Source\Math\Private\Vec3D.cpp" />
     <ClCompile Include="Source\Math\Private\Vec4D-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Vec4D.cpp" />
-    <ClCompile Include="Source\Renderer\Private\Renderer.cpp" />
     <ClCompile Include="Source\Time\Private\TimerUtil.cpp" />
     <ClCompile Include="Source\Time\Private\TimerUtil.win32.cpp" />
   </ItemGroup>

@@ -6,8 +6,8 @@
 #include <GL/freeglut.h>
 
 // Engine includes
-#include <Graphics/GLUTHelper.h>
-#include <Renderer/Renderer.h>
+#include "Graphics/GLUTHelper.h"
+#include "Graphics/Renderer.h"
 
 namespace engine {
 namespace application {
@@ -50,12 +50,12 @@ namespace application {
 
     void GLApplication::Update()
     {
-        engine::renderer::Update();
+        engine::graphics::Update();
     }
 
     void GLApplication::Render()
     {
-        engine::renderer::Render();
+        engine::graphics::Render();
     }
 
     void GLApplication::ReceiveKeyboardInput(unsigned char key, int x, int y)

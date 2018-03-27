@@ -3,11 +3,10 @@
 // External includes
 
 // Engine includes
-#include <Graphics/GLUTHelper.h>
-#include <Renderer/Renderer.h>
+#include "Graphics/GLUTHelper.h"
 
 // Demo includes
-#include <Demo/DemoApplication.h>
+#include "Demo/DemoApplication.h"
 
 //~====================================================================================================
 // MAIN

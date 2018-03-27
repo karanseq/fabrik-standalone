@@ -1,4 +1,4 @@
-#include "Renderer/Renderer.h"
+#include "Graphics/Renderer.h"
 
 // Library includes
 
@@ -6,10 +6,10 @@
 #include <GL/freeglut.h>
 
 // Engine includes
-#include <Graphics/GLUTHelper.h>
+#include "Graphics/GLUTHelper.h"
 
 namespace engine {
-namespace renderer {
+namespace graphics {
 
     void Update()
     {

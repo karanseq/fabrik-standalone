@@ -5,8 +5,8 @@
 #include <GL/freeglut.h>
 
 // Engine includes
-#include <Assert/Assert.h>
-#include <Logger/Logger.h>
+#include "Assert/Assert.h"
+#include "Logger/Logger.h"
 
 namespace engine {
 namespace graphics{

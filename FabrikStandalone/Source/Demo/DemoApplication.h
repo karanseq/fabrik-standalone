@@ -6,7 +6,7 @@
 // External includes
 
 // Engine includes
-#include <Application/GLApplication.h>
+#include "Application/GLApplication.h"
 
 class DemoApplication : public engine::application::GLApplication
 {

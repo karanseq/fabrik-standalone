@@ -10,7 +10,7 @@
 // Forward declarations
 
 namespace engine {
-namespace renderer {
+namespace graphics {
 
     void Update();
     void Render();
