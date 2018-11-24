@@ -8,7 +8,7 @@
 
 bool DemoApplication::Init(int argc, char** argv)
 {
-    window_title_ = "FABRIK Standalone";
+    window_title_ = "Renderer Demo";
     return GLApplication::Init(argc, argv);
 }
 
