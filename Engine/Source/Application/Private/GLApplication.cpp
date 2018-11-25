@@ -1,13 +1,16 @@
-#include "Application/GLApplication.h"
+#include "Application\GLApplication.h"
 
 // Library includes
+#ifdef BUILD_DEBUG
+#include <crtdbg.h>
+#endif // BUILD_DEBUG
 
 // External includes
-#include <GL/freeglut.h>
+#include <GL\freeglut.h>
 
 // Engine includes
-#include "Graphics/GLUTHelper.h"
-#include "Graphics/Renderer.h"
+#include "Application\GLUTHelper.h"
+#include "Common\Engine.h"
 
 namespace engine {
 namespace application {
@@ -16,7 +19,7 @@ namespace application {
     {
         g_application = this;
 
-        engine::graphics::GLUTHelper::InitParams init_params;
+        GLUTHelper::InitParams init_params;
         init_params.pargc = &argc;
         init_params.argv = argv;
         init_params.display_mode = GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE;
@@ -30,32 +33,45 @@ namespace application {
 
         // Setup callbacks
         {
-            init_params.display_func = &engine::application::ApplicationRenderFunc;
-            init_params.idle_func = &engine::application::ApplicationUpdateFunc;
-            init_params.keyboard_func = &engine::application::ApplicationKeyboardFunc;
+            init_params.display_func = &ApplicationRenderFunc;
+            init_params.idle_func = &ApplicationUpdateFunc;
+            init_params.keyboard_func = &ApplicationKeyboardFunc;
         }
 
-        return engine::graphics::GLUTHelper::Init(init_params);
+        if (GLUTHelper::Init(init_params) == false)
+        {
+            return false;
+        }
+
+        engine::Init();
+        return true;
     }
 
     void GLApplication::Run()
     {
-        engine::graphics::GLUTHelper::Run();
+        GLUTHelper::Run();
     }
 
     bool GLApplication::Shutdown()
     {
-        return engine::graphics::GLUTHelper::Shutdown();
+        engine::Shutdown();
+
+#if defined(_DEBUG)
+        _CrtDumpMemoryLeaks();
+#endif // _DEBUG
+
+        return GLUTHelper::Shutdown();
     }
 
     void GLApplication::Update()
     {
-        engine::graphics::Update();
+        engine::Update();
+        GLUTHelper::Update();
     }
 
     void GLApplication::Render()
     {
-        engine::graphics::Render();
+        engine::Render();
     }
 
     void GLApplication::ReceiveKeyboardInput(unsigned char key, int x, int y)

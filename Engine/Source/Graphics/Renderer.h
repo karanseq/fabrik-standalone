@@ -12,7 +12,6 @@
 namespace engine {
 namespace graphics {
 
-    void Update();
     void Render();
 
 } // namespace renderer

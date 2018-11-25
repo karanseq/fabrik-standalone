@@ -3,10 +3,9 @@
 // External includes
 
 // Engine includes
-#include "Graphics/GLUTHelper.h"
 
 // Demo includes
-#include "Demo/DemoApplication.h"
+#include "Demo\DemoApplication.h"
 
 //~====================================================================================================
 // MAIN
@@ -14,7 +13,9 @@
 int main(int argc, char** argv)
 {
     DemoApplication demo;
-    demo.Init(argc, argv);
-    demo.Run();
+    if (demo.Init(argc, argv))
+    {
+        demo.Run();
+    }
     return 0;
 }

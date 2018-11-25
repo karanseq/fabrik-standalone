@@ -1,20 +1,14 @@
-#include "Graphics/Renderer.h"
+#include "Graphics\Renderer.h"
 
 // Library includes
 
 // External includes
-#include <GL/freeglut.h>
+#include <GL\freeglut.h>
 
 // Engine includes
-#include "Graphics/GLUTHelper.h"
 
 namespace engine {
 namespace graphics {
-
-    void Update()
-    {
-        glutPostRedisplay();
-    }
 
     void Render()
     {

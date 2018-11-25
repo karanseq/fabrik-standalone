@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 namespace engine {
-namespace graphics {
+namespace application {
 
     /*
         GLUTHelper
@@ -37,6 +37,7 @@ namespace graphics {
     public:
         static bool Init(const InitParams& i_params);
         static void Run();
+        static void Update();
         static bool Shutdown();
 
     private:
@@ -48,7 +49,7 @@ namespace graphics {
 
     }; // class GLUTHelper
 
-}
+} // namespace application
 } // namespace engine
 
 #endif // GLUT_HELPER_H_

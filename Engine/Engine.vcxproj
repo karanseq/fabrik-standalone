@@ -323,9 +323,18 @@
   <ItemGroup>
     <ClInclude Include="Source\Application\Application.h" />
     <ClInclude Include="Source\Application\GLApplication.h" />
+    <ClInclude Include="Source\Application\GLUTHelper.h" />
     <ClInclude Include="Source\Assert\Assert.h" />
+    <ClInclude Include="Source\Common\Engine.h" />
     <ClInclude Include="Source\Common\HelperMacros.h" />
-    <ClInclude Include="Source\Graphics\GLUTHelper.h" />
+    <ClInclude Include="Source\Data\BitArray-inl.h" />
+    <ClInclude Include="Source\Data\BitArray.h" />
+    <ClInclude Include="Source\Data\HashedString-inl.h" />
+    <ClInclude Include="Source\Data\HashedString.h" />
+    <ClInclude Include="Source\Data\PooledString-inl.h" />
+    <ClInclude Include="Source\Data\PooledString.h" />
+    <ClInclude Include="Source\Data\StringPool-inl.h" />
+    <ClInclude Include="Source\Data\StringPool.h" />
     <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Logger\Logger.h" />
     <ClInclude Include="Source\Math\AABB.h" />
@@ -352,13 +361,36 @@
     <ClInclude Include="Source\Math\Vec4D-SSE-inl.h" />
     <ClInclude Include="Source\Math\Vec4D-SSE.h" />
     <ClInclude Include="Source\Math\Vec4D.h" />
+    <ClInclude Include="Source\Memory\AllocationCounter-inl.h" />
+    <ClInclude Include="Source\Memory\AllocationCounter.h" />
+    <ClInclude Include="Source\Memory\AllocatorOverrides.h" />
+    <ClInclude Include="Source\Memory\AllocatorUtil.h" />
+    <ClInclude Include="Source\Memory\BlockAllocator-inl.h" />
+    <ClInclude Include="Source\Memory\BlockAllocator.h" />
+    <ClInclude Include="Source\Memory\FixedSizeAllocator-inl.h" />
+    <ClInclude Include="Source\Memory\FixedSizeAllocator.h" />
+    <ClInclude Include="Source\Memory\RefCounter.h" />
+    <ClInclude Include="Source\Memory\SharedPointer-inl.h" />
+    <ClInclude Include="Source\Memory\SharedPointer.h" />
+    <ClInclude Include="Source\Memory\UniquePointer-inl.h" />
+    <ClInclude Include="Source\Memory\UniquePointer.h" />
+    <ClInclude Include="Source\Memory\WeakPointer-inl.h" />
+    <ClInclude Include="Source\Memory\WeakPointer.h" />
     <ClInclude Include="Source\Time\InterfaceTickable.h" />
     <ClInclude Include="Source\Time\TimerUtil.h" />
+    <ClInclude Include="Source\Util\FileUtils-inl.h" />
+    <ClInclude Include="Source\Util\FileUtils.h" />
+    <ClInclude Include="Source\Util\Profiler.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application\Private\Application.cpp" />
     <ClCompile Include="Source\Application\Private\GLApplication.cpp" />
-    <ClCompile Include="Source\Graphics\Private\GLUTHelper.cpp" />
+    <ClCompile Include="Source\Application\Private\GLUTHelper.cpp" />
+    <ClCompile Include="Source\Common\Private\Engine.cpp" />
+    <ClCompile Include="Source\Data\Private\BitArray.cpp" />
+    <ClCompile Include="Source\Data\Private\HashedString.cpp" />
+    <ClCompile Include="Source\Data\Private\PooledString.cpp" />
+    <ClCompile Include="Source\Data\Private\StringPool.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
@@ -374,8 +406,15 @@
     <ClCompile Include="Source\Math\Private\Vec3D.cpp" />
     <ClCompile Include="Source\Math\Private\Vec4D-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Vec4D.cpp" />
+    <ClCompile Include="Source\Memory\Private\AllocationCounter.cpp" />
+    <ClCompile Include="Source\Memory\Private\AllocatorOverrides.cpp" />
+    <ClCompile Include="Source\Memory\Private\AllocatorUtil.cpp" />
+    <ClCompile Include="Source\Memory\Private\BlockAllocator.cpp" />
+    <ClCompile Include="Source\Memory\Private\FixedSizeAllocator.cpp" />
     <ClCompile Include="Source\Time\Private\TimerUtil.cpp" />
     <ClCompile Include="Source\Time\Private\TimerUtil.win32.cpp" />
+    <ClCompile Include="Source\Util\Private\FileUtils.cpp" />
+    <ClCompile Include="Source\Util\Private\Profiler.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

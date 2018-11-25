@@ -1,1 +1,16 @@
+TODO:
+Priority-0
+----------
+- Shader builder
+- Texture loading
+- Assimp
+- Constant buffers
+- Shaders
 
+Priority-1
+----------
+- Update loop delay
+
+Priority-N
+----------
+- constexpr-ify

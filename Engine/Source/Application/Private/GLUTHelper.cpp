@@ -1,15 +1,15 @@
-#include "Graphics/GLUTHelper.h"
+#include "Application\GLUTHelper.h"
 
 // External includes
-#include <GL/glew.h>
-#include <GL/freeglut.h>
+#include <GL\glew.h>
+#include <GL\freeglut.h>
 
 // Engine includes
-#include "Assert/Assert.h"
-#include "Logger/Logger.h"
+#include "Assert\Assert.h"
+#include "Logger\Logger.h"
 
 namespace engine {
-namespace graphics{
+namespace application{
 
     bool GLUTHelper::Init(const InitParams& i_params)
     {
@@ -49,11 +49,16 @@ namespace graphics{
         glutMainLoop();
     }
 
+    void GLUTHelper::Update()
+    {
+        glutPostRedisplay();
+    }
+
     bool GLUTHelper::Shutdown()
     {
         glutLeaveMainLoop();
         return true;
     }
 
-} // namespace graphics
+} // namespace application
 } // namespace engine
