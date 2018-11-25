@@ -41,6 +41,8 @@ public:
     inline bool operator==(const UniquePointer& i_other) const;
     inline bool operator!=(const UniquePointer& i_other) const;
 
+    inline T* Get() const;
+
 private:
     T*                              object_;
 }; // class UniquePointer

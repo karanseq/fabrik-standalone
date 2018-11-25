@@ -196,6 +196,16 @@ namespace memory {
 
 std::mutex allocator_util_mutex;
 
+void* Malloc(size_t i_size)
+{
+    return DoAlloc(i_size, __FUNCTION__);
+}
+
+void Free(void* i_pointer)
+{
+    DoFree(i_pointer, __FUNCTION__);
+}
+
 void* DoAlloc(size_t i_size, const char* i_function_name)
 {
     void* pointer = nullptr;

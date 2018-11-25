@@ -67,6 +67,8 @@ public:
     inline bool operator==(const SharedPointer& i_other) const;
     inline bool operator!=(const SharedPointer& i_other) const;
 
+    inline T* Get() const;
+
 #ifdef BUILD_DEBUG
     inline long GetStrongCount() const;
     inline long GetWeakCount() const;

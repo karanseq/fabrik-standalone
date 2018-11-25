@@ -30,22 +30,6 @@ public:
             file_size(i_file_size)
         {}
 
-        FileData(const FileData& i_copy) : file_name(i_copy.file_name),
-            file_contents(i_copy.file_contents),
-            file_size(i_copy.file_size)
-        {}
-
-        FileData& operator=(const FileData& i_other)
-        {
-            if (this != &i_other)
-            {
-                file_name = i_other.file_name;
-                file_contents = i_other.file_contents;
-                file_size = i_other.file_size;
-            }
-            return *this;
-        }
-
     }; // struct FileData
 
 private:

@@ -25,6 +25,9 @@ namespace memory {
     class BlockAllocator;
     class FixedSizeAllocator;
 
+    void* Malloc(size_t i_size);
+    void Free(void* i_pointer);
+
     void* DoAlloc(size_t i_size, const char* i_function_name);
     void DoFree(void* i_pointer, const char* i_function_name);
 

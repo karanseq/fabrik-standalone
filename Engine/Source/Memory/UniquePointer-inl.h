@@ -47,5 +47,11 @@ inline bool UniquePointer<T>::operator!=(const UniquePointer& i_other) const
     return (object_ != i_other.object_);
 }
 
+template<class T>
+inline T* UniquePointer<T>::Get() const
+{
+    return object_;
+}
+
 } // namespace memory
 } // namespace engine

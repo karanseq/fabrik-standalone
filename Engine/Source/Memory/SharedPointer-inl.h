@@ -73,6 +73,12 @@ inline bool SharedPointer<T>::operator!=(const SharedPointer& i_other) const
     return (object_ != i_other.object_);
 }
 
+template<class T>
+inline T* SharedPointer<T>::Get() const
+{
+    return object_;
+}
+
 #ifdef BUILD_DEBUG
 template<class T>
 inline long SharedPointer<T>::GetStrongCount() const
