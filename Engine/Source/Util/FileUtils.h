@@ -60,9 +60,13 @@ public:
     inline bool IsFileCached(unsigned int i_hash) const;
 
 private:
+    void InitWorkingDirectory();
+
+private:
     mutable std::mutex                                      file_cache_mutex_;
     std::unordered_map<unsigned int, FileData>              file_cache_;
-    
+    engine::data::PooledString                              working_directory_;
+
 }; // class FileUtils
 
 } // namespace util

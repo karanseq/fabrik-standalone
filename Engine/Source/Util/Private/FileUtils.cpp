@@ -1,9 +1,14 @@
 #include "Util\FileUtils.h"
 
-// engine includes
+// Library includes
+#include <windows.h>
+
+// Engine includes
 #include "Assert\Assert.h"
 #include "Common\HelperMacros.h"
 #include "Logger\Logger.h"
+#include "Memory\AllocatorOverrides.h"
+#include "Memory\UniquePointer.h"
 
 namespace engine {
 namespace util {
@@ -12,7 +17,10 @@ namespace util {
 FileUtils* FileUtils::instance_ = nullptr;
 
 FileUtils::FileUtils()
-{}
+{
+    // TODO: Make this better
+    InitWorkingDirectory();
+}
 
 FileUtils::~FileUtils()
 {
@@ -51,10 +59,14 @@ const FileUtils::FileData FileUtils::ReadFile(const engine::data::PooledString& 
     // read the file
     FILE * file = nullptr;
 
-    errno_t fopen_error = fopen_s(&file, i_file_name.GetString(), "rb");
+    const size_t full_file_name_length = working_directory_.GetLength() + i_file_name.GetLength() + 1;
+    engine::memory::UniquePointer<char> full_file_name = static_cast<char*>(engine::memory::Malloc(full_file_name_length));
+    sprintf_s(full_file_name.Get(), full_file_name_length, "%s%s", working_directory_.GetString(), i_file_name.GetString());
+
+    errno_t fopen_error = fopen_s(&file, full_file_name.Get(), "rb");
     if (fopen_error != 0)
     {
-        LOG_ERROR("Could not open %s...error code:%d", i_file_name, fopen_error);
+        LOG_ERROR("Could not open '%s' Error code:%d", i_file_name, fopen_error);
         return FileData();
     }
 
@@ -69,12 +81,13 @@ const FileUtils::FileData FileUtils::ReadFile(const engine::data::PooledString& 
     file_IOError = fseek(file, 0, SEEK_SET);
     ASSERT(file_IOError == 0);
 
-    uint8_t * buffer = new uint8_t[file_size];
+    uint8_t * buffer = new uint8_t[file_size + 1];
     ASSERT(buffer);
 
     size_t file_read = fread(buffer, 1, file_size, file);
     ASSERT(file_read == file_size);
 
+    buffer[file_read] = '\0';
     fclose(file);
 
     // another thread might have added this file since the last time we checked
@@ -117,6 +130,33 @@ void FileUtils::ClearFileCache()
     }
     file_cache_.clear();
     LOG("FileUtils file cache cleared");
+}
+
+void FileUtils::InitWorkingDirectory()
+{
+    static constexpr size_t BUFFER_SIZE = 1000;
+    char buffer[BUFFER_SIZE];
+    const size_t num_characters_copied = GetModuleFileName(NULL, buffer, BUFFER_SIZE);
+    ASSERT(num_characters_copied > 0);
+
+    size_t index = num_characters_copied - 1;
+    while (index > 0)
+    {
+        if (buffer[index] == '\\')
+        {
+            break;
+        }
+        --index;
+    }
+
+    if (index > 0)
+    {
+        buffer[index + 1] = '\0';
+        working_directory_ = engine::data::PooledString(buffer);
+#ifdef BUILD_DEBUG
+        LOG("%s '%s'", __FUNCTION__, working_directory_.GetString());
+#endif
+    }
 }
 
 } // namespace util

@@ -255,6 +255,9 @@
     <ClInclude Include="Source\Application\GLUTHelper.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\ShaderBuilder.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp">
@@ -352,6 +355,9 @@
     </ClCompile>
     <ClCompile Include="Source\Application\Private\GLUTHelper.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

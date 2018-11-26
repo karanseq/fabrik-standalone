@@ -9,6 +9,7 @@
     <IntermediateDir>$(TempDir)intermediates\$(ProjectName)\</IntermediateDir>
     <OutputDir>$(TempDir)output\</OutputDir>
     <LicenseDir>$(OutputDir)Licenses\</LicenseDir>
+    <OutputContentDir>$(OutputDir)Content</OutputContentDir>
   </PropertyGroup>
   <PropertyGroup>
     <OutDir>$(OutputDir)</OutDir>
@@ -43,6 +44,9 @@
       <Value>$(LicenseDir)</Value>
       <EnvironmentVariable>true</EnvironmentVariable>
     </BuildMacro>
+    <BuildMacro Include="OutputContentDir">
+      <Value>$(OutputContentDir)</Value>
+    </BuildMacro>
   </ItemGroup>
   <ItemDefinitionGroup>
     <Link>
@@ -52,10 +56,14 @@
     <ClCompile>
       <TreatWarningAsError>true</TreatWarningAsError>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_MBCS</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ExternalDir)FreeGLUT\include;$(ExternalDir)GLEW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Lib>
       <TreatLibWarningAsErrors>true</TreatLibWarningAsErrors>
     </Lib>
+    <PostBuildEvent>
+      <Command>
+      </Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
 </Project>

@@ -24,6 +24,10 @@ public:
 
     void ReceiveKeyboardInput(unsigned char key, int x, int y) override;
 
+    // Demo functions
+private:
+    void TestCompileShaders();
+
 }; // class DemoApplication
 
 #endif // DEMO_APPLICATION_H_

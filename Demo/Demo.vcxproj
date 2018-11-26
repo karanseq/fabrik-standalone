@@ -119,9 +119,11 @@
       </Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy "$(ExternalDir)FreeGLUT\bin\freeglut.dll" "$(TargetDir)"
-copy "$(ExternalDir)GLEW\bin\glew32.dll" "$(TargetDir)"</Command>
-      <Message>Copying external binaries</Message>
+      <Command>xcopy "$(ExternalDir)FreeGLUT\bin\freeglut.dll" "$(TargetDir)" /s /e /y /i
+xcopy "$(ExternalDir)GLEW\bin\glew32.dll" "$(TargetDir)" /s /e /y /i
+xcopy "$(EngineSourceContentDir)*" "$(TargetDir)Content\" /s /e /y /i</Command>
+      <Message>
+      </Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -183,8 +185,9 @@ copy "$(ExternalDir)GLEW\bin\glew32.dll" "$(TargetDir)"</Command>
       </Inputs>
     </CustomBuildStep>
     <PostBuildEvent>
-      <Command>copy "$(ExternalDir)FreeGLUT\bin\freeglut.dll" "$(TargetDir)"
-copy "$(ExternalDir)GLEW\bin\glew32.dll" "$(TargetDir)"</Command>
+      <Command>xcopy "$(ExternalDir)FreeGLUT\bin\freeglut.dll" "$(TargetDir)" /s /e /y /i
+xcopy "$(ExternalDir)GLEW\bin\glew32.dll" "$(TargetDir)" /s /e /y /i
+xcopy "$(EngineSourceContentDir)*" "$(TargetDir)Content\" /s /e /y /i</Command>
       <Message>Copying external binaries</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
