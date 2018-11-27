@@ -83,6 +83,10 @@ namespace application {
     {
         engine::Shutdown();
 
+        SDL_GL_DeleteContext(gl_context_);
+        SDL_DestroyWindow(window_);
+        SDL_Quit();
+
 #if defined(_DEBUG)
         _CrtDumpMemoryLeaks();
 #endif // _DEBUG
