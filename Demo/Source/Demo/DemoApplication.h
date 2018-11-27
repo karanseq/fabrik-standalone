@@ -6,23 +6,14 @@
 // External includes
 
 // Engine includes
-#include "Application/GLApplication.h"
+#include "Application\SDLApplication.h"
 
-class DemoApplication : public engine::application::GLApplication
+class DemoApplication : public engine::application::SDLApplication
 {
 public:
-    DemoApplication() = default;
+    DemoApplication() : engine::application::SDLApplication("Renderer Demo")
+    {}
     virtual ~DemoApplication() = default;
-
-    // ApplicationInterface implementation
-public:
-    bool Init(int argc, char** argv) override;
-    bool Shutdown() override;
-
-    void Update() override;
-    void Render() override;
-
-    void ReceiveKeyboardInput(unsigned char key, int x, int y) override;
 
     // Demo functions
 private:

@@ -159,9 +159,6 @@
     <ClInclude Include="Source\Application\Application.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Application\GLApplication.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Math\Quaternion.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
@@ -252,11 +249,11 @@
     <ClInclude Include="Source\Common\Engine.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Application\GLUTHelper.h">
-      <Filter>Header Files\Application</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Graphics\ShaderBuilder.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Application\SDLApplication.h">
+      <Filter>Header Files\Application</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -305,12 +302,6 @@
     <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Application\Private\GLApplication.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Application\Private\Application.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Math\Private\Quaternion.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
@@ -353,11 +344,11 @@
     <ClCompile Include="Source\Common\Private\Engine.cpp">
       <Filter>Source Files\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Application\Private\GLUTHelper.cpp">
-      <Filter>Source Files\Application</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Application\Private\SDLApplication.cpp">
+      <Filter>Source Files\Application</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

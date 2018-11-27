@@ -1,54 +1,15 @@
-#include "Demo/DemoApplication.h"
+#include "Demo\DemoApplication.h"
 
 // Library includes
-#include <GL\glew.h>
 
 // External includes
+#include <GL\glew.h>
 
 // Engine includes
 #include "Data\PooledString.h"
 #include "Graphics\ShaderBuilder.h"
 #include "Logger\Logger.h"
 #include "Util\FileUtils.h"
-
-bool DemoApplication::Init(int argc, char** argv)
-{
-    window_title_ = "Renderer Demo";
-    return GLApplication::Init(argc, argv);
-}
-
-bool DemoApplication::Shutdown()
-{
-    return GLApplication::Shutdown();
-}
-
-void DemoApplication::Update()
-{
-    GLApplication::Update();
-}
-
-void DemoApplication::Render()
-{
-    GLApplication::Render();
-}
-
-void DemoApplication::ReceiveKeyboardInput(unsigned char key, int x, int y)
-{
-    static constexpr unsigned char ESC_KEY = 27;
-
-    switch (key)
-    {
-    case ESC_KEY:
-        Shutdown();
-        break;
-    case 's':
-    case 'S':
-        TestCompileShaders();
-        break;
-    default:
-        break;
-    }
-}
 
 void DemoApplication::TestCompileShaders()
 {

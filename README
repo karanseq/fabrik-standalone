@@ -1,16 +1,15 @@
 TODO:
 Priority-0
 ----------
-- Shader builder
+- Mesh class
+- Shader class
+- SDL user input
+- Constant buffers
 - Texture loading
 - Assimp
-- Constant buffers
-- Shaders
 
 Priority-1
 ----------
+- Standardize to Unix style file path separators in #include
 - Update loop delay
-
-Priority-N
-----------
 - constexpr-ify

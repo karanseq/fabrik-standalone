@@ -322,8 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Application\Application.h" />
-    <ClInclude Include="Source\Application\GLApplication.h" />
-    <ClInclude Include="Source\Application\GLUTHelper.h" />
+    <ClInclude Include="Source\Application\SDLApplication.h" />
     <ClInclude Include="Source\Assert\Assert.h" />
     <ClInclude Include="Source\Common\Engine.h" />
     <ClInclude Include="Source\Common\HelperMacros.h" />
@@ -384,9 +383,7 @@
     <ClInclude Include="Source\Util\Profiler.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source\Application\Private\Application.cpp" />
-    <ClCompile Include="Source\Application\Private\GLApplication.cpp" />
-    <ClCompile Include="Source\Application\Private\GLUTHelper.cpp" />
+    <ClCompile Include="Source\Application\Private\SDLApplication.cpp" />
     <ClCompile Include="Source\Common\Private\Engine.cpp" />
     <ClCompile Include="Source\Data\Private\BitArray.cpp" />
     <ClCompile Include="Source\Data\Private\HashedString.cpp" />

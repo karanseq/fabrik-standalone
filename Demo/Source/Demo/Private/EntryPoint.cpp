@@ -13,9 +13,10 @@
 int main(int argc, char** argv)
 {
     DemoApplication demo;
-    if (demo.Init(argc, argv))
+    if (demo.Init())
     {
         demo.Run();
+        demo.Shutdown();
     }
     return 0;
 }
