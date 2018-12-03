@@ -8,6 +8,13 @@
 // Engine includes
 #include "Application\SDLApplication.h"
 
+// Forward declarations
+namespace engine {
+namespace events {
+    class KeyboardEvent;
+}
+}
+
 class DemoApplication : public engine::application::SDLApplication
 {
 public:
@@ -15,8 +22,13 @@ public:
     {}
     virtual ~DemoApplication() = default;
 
+    // ApplicationInterface implementation
+public:
+    bool Init() override;
+
     // Demo functions
 private:
+    void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
     void TestCompileShaders();
 
 }; // class DemoApplication

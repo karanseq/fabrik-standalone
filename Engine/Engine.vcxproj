@@ -334,8 +334,14 @@
     <ClInclude Include="Source\Data\PooledString.h" />
     <ClInclude Include="Source\Data\StringPool-inl.h" />
     <ClInclude Include="Source\Data\StringPool.h" />
+    <ClInclude Include="Source\Events\EventDispatcher-inl.h" />
+    <ClInclude Include="Source\Events\EventDispatcher.h" />
+    <ClInclude Include="Source\Events\KeyboardEvent.h" />
     <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Graphics\ShaderBuilder.h" />
+    <ClInclude Include="Source\Input\InputProcessor-inl.h" />
+    <ClInclude Include="Source\Input\InputProcessor.h" />
+    <ClInclude Include="Source\Input\InputTypes.h" />
     <ClInclude Include="Source\Logger\Logger.h" />
     <ClInclude Include="Source\Math\AABB.h" />
     <ClInclude Include="Source\Math\Mat44-inl.h" />
@@ -389,8 +395,10 @@
     <ClCompile Include="Source\Data\Private\HashedString.cpp" />
     <ClCompile Include="Source\Data\Private\PooledString.cpp" />
     <ClCompile Include="Source\Data\Private\StringPool.cpp" />
+    <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp" />
+    <ClCompile Include="Source\Input\Private\InputProcessor.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
     <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp" />

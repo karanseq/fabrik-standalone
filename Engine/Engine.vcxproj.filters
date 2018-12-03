@@ -70,6 +70,18 @@
     <Filter Include="Source Files\Common">
       <UniqueIdentifier>{3451ac4d-cc34-4aa5-baa6-2297fc5ccb6d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{b6ebe9f4-99c0-4d91-a2b3-0571171305e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Input">
+      <UniqueIdentifier>{5bd5b943-96c9-4e31-a4ee-66570304ef7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Events">
+      <UniqueIdentifier>{6d46f6f7-f851-4823-9915-b3f255ec70f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Events">
+      <UniqueIdentifier>{c3e44d6d-8122-4de6-b671-d02a340eaff2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -255,6 +267,24 @@
     <ClInclude Include="Source\Application\SDLApplication.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Input\InputProcessor.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\EventDispatcher.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\EventDispatcher-inl.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\KeyboardEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\InputTypes.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Input\InputProcessor-inl.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp">
@@ -349,6 +379,12 @@
     </ClCompile>
     <ClCompile Include="Source\Application\Private\SDLApplication.cpp">
       <Filter>Source Files\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Input\Private\InputProcessor.cpp">
+      <Filter>Source Files\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp">
+      <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

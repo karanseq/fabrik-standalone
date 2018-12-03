@@ -64,11 +64,12 @@ namespace application {
         while (running)
         {
             SDL_Event event;
-            if (SDL_PollEvent(&event))
+            while (SDL_PollEvent(&event))
             {
                 if (event.type == SDL_QUIT)
                 {
                     running = false;
+                    break;
                 }
 
                 HandleSDLEvent(event);
@@ -156,7 +157,7 @@ namespace application {
 
     void SDLApplication::HandleSDLEvent(const SDL_Event& i_event)
     {
-
+        engine::HandleSDLEvent(i_event);
     }
 
 } // namespace application
