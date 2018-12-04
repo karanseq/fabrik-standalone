@@ -6,14 +6,13 @@ union SDL_Event;
 
 namespace engine {
 
-void Init();
+bool Init();
 void Update();
 void Render();
 void HandleSDLEvent(const SDL_Event& i_event);
 
-void Pause();
-void Resume();
-bool IsPaused();
+void RequestShutdown();
+bool WasShutdownRequested();
 
 void Shutdown();
 

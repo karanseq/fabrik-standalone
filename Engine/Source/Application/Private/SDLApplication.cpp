@@ -7,9 +7,12 @@
 
 // External includes
 #include "GL\glew.h"
+#include  "SDL.h"
 
 // Engine includes
 #include "Common\Engine.h"
+#include "Events\KeyboardEvent.h"
+#include "Input\InputProcessor.h"
 #include "Logger\Logger.h"
 
 namespace engine {
@@ -54,24 +57,26 @@ namespace application {
             return false;
         }
 
-        engine::Init();
+        if (engine::Init() == false)
+        {
+            return false;
+        }
+
+        if (InitInputEventDispatchers() == false)
+        {
+            return false;
+        }
+
         return true;
     }
 
     void SDLApplication::Run()
     {
-        bool running = true;
-        while (running)
+        while (WasShutdownRequested() == false)
         {
             SDL_Event event;
             while (SDL_PollEvent(&event))
             {
-                if (event.type == SDL_QUIT)
-                {
-                    running = false;
-                    break;
-                }
-
                 HandleSDLEvent(event);
             }
 
@@ -155,9 +160,34 @@ namespace application {
         return true;
     }
 
+    bool SDLApplication::InitInputEventDispatchers()
+    {
+        keyboard_event_receipt_ = engine::input::InputProcessor::Get()->AddListener<engine::events::KeyboardEvent>(
+            std::bind(&SDLApplication::OnKeyboardEvent, this, std::placeholders::_1)
+            );
+
+        return keyboard_event_receipt_.IsValid();
+    }
+
     void SDLApplication::HandleSDLEvent(const SDL_Event& i_event)
     {
+        if (i_event.type == SDL_QUIT)
+        {
+            RequestShutdown();
+            return;
+        }
+
         engine::HandleSDLEvent(i_event);
+    }
+
+    void SDLApplication::OnKeyboardEvent(const engine::events::KeyboardEvent& i_event)
+    {
+        const SDL_Event& sdl_event = i_event.GetSDLEvent();
+        const SDL_Keycode keycode = sdl_event.key.keysym.sym;
+        if (keycode == SDLK_ESCAPE)
+        {
+            RequestShutdown();
+        }
     }
 
 } // namespace application

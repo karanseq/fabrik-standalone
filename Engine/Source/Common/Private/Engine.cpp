@@ -9,22 +9,15 @@
 #include "Data\StringPool.h"
 #include "Graphics\Renderer.h"
 #include "Input\InputProcessor.h"
-//#include "Jobs\JobSystem.h"
 #include "Logger\Logger.h"
 #include "Memory\AllocatorUtil.h"
-//#include "Physics\Collider.h"
-//#include "Physics\Physics.h"
-//#include "Renderer\Renderer.h"
-#include "Time\TimerUtil.h"
-//#include "Time\Updater.h"
 #include "Util\FileUtils.h"
-#include "Util\Profiler.h"
 
 namespace engine {
 
-static bool is_paused_ = false;
+static bool g_was_shutdown_requested = false;
 
-void Init()
+bool Init()
 {
     // create allocators
     engine::memory::CreateAllocators();
@@ -38,7 +31,9 @@ void Init()
     // initialize input
     engine::input::InputProcessor::Create();
 
-    is_paused_ = false;
+    g_was_shutdown_requested = false;
+
+    return true;
 }
 
 void Update()
@@ -56,27 +51,18 @@ void HandleSDLEvent(const SDL_Event& i_event)
     engine::input::InputProcessor::Get()->HandleSDLEvent(i_event);
 }
 
-void Pause()
+void RequestShutdown()
 {
-    if (is_paused_)
+    if (g_was_shutdown_requested == true)
     {
         return;
     }
-    is_paused_ = true;
+    g_was_shutdown_requested = true;
 }
 
-void Resume()
+bool WasShutdownRequested()
 {
-    if (!is_paused_)
-    {
-        return;
-    }
-    is_paused_ = false;
-}
-
-bool IsPaused()
-{
-    return is_paused_;
+    return g_was_shutdown_requested;
 }
 
 void Shutdown()

@@ -25,10 +25,10 @@ public:
     // ApplicationInterface implementation
 public:
     bool Init() override;
+    void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event) override;
 
     // Demo functions
 private:
-    void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
     void TestCompileShaders();
 
 }; // class DemoApplication

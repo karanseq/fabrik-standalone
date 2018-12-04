@@ -6,6 +6,7 @@
 #include <vector>
 
 // Engine includes
+#include "Common/HelperMacros.h"
 
 namespace engine {
 namespace input {

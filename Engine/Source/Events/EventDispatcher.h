@@ -5,12 +5,9 @@
 #include <functional>
 #include <mutex>
 #include <unordered_map>
-#include <vector>
 
 // Engine includes
 #include "Data/HashedString.h"
-#include "Memory/SharedPointer.h"
-#include "Memory/WeakPointer.h"
 
 namespace engine {
 namespace events {

@@ -3,7 +3,7 @@
 // Library includes
 
 // External includes
-#include <GL\glew.h>
+#include "GL\glew.h"
 #include "SDL.h"
 
 // Engine includes
@@ -14,8 +14,6 @@
 #include "Logger\Logger.h"
 #include "Util\FileUtils.h"
 
-engine::events::EventReceipt g_keyboard_event_receipt;
-
 bool DemoApplication::Init()
 {
     if (engine::application::SDLApplication::Init() == false)
@@ -23,16 +21,13 @@ bool DemoApplication::Init()
         return false;
     }
 
-    // Register for input
-    g_keyboard_event_receipt = engine::input::InputProcessor::Get()->AddListener<engine::events::KeyboardEvent>(
-        std::bind(&DemoApplication::OnKeyboardEvent, this, std::placeholders::_1)
-        );
-
     return true;
 }
 
 void DemoApplication::OnKeyboardEvent(const engine::events::KeyboardEvent& i_event)
 {
+    SDLApplication::OnKeyboardEvent(i_event);
+
     const SDL_Event& sdl_event = i_event.GetSDLEvent();
     const SDL_Keycode keycode = sdl_event.key.keysym.sym;
     LOG("%s %d", __FUNCTION__, keycode);
