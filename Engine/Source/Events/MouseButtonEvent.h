@@ -1,5 +1,5 @@
-#ifndef KEYBOARD_EVENT_H_
-#define KEYBOARD_EVENT_H_
+#ifndef MOUSE_BUTTON_EVENT_H_
+#define MOUSE_BUTTON_EVENT_H_
 
 // External includes
 #include "SDL_events.h"
@@ -19,26 +19,26 @@ namespace events {
 
 class EventReceipt;
 
-class KeyboardEvent
+class MouseButtonEvent
 {
 public:
-    KeyboardEvent(const SDL_KeyboardEvent& i_sdl_event) :
+    MouseButtonEvent(const SDL_MouseButtonEvent& i_sdl_event) :
         sdl_event_(i_sdl_event)
     {}
-    ~KeyboardEvent() = default;
+    ~MouseButtonEvent() = default;
 
-    const SDL_KeyboardEvent& GetSDLEvent() const;
+    const SDL_MouseButtonEvent& GetSDLEvent() const;
 
     static engine::input::InputType GetInputType();
     static const engine::data::HashedString& GetEventID();
     static bool IsReceiptApplicable(const engine::events::EventReceipt& i_receipt);
 
 private:
-    const SDL_KeyboardEvent&                        sdl_event_;
+    const SDL_MouseButtonEvent&                     sdl_event_;
 
-}; // class KeyboardEvent
+}; // class MouseButtonEvent
 
 } // namespace events
 } // namespace engine
 
-#endif // KEYBOARD_EVENT_H_
+#endif // MOUSE_BUTTON_EVENT_H_

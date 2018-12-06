@@ -1,9 +1,6 @@
 #include "Input/InputProcessor.h"
 
 // Library includes
-#include <functional>
-#include <unordered_map>
-#include <vector>
 
 // Engine includes
 #include "Common/HelperMacros.h"
@@ -52,14 +49,21 @@ void InputProcessor::Update()
         {
         case SDL_KEYDOWN:
         case SDL_KEYUP:
-            DispatchEvent(engine::events::KeyboardEvent(sdl_event));
+            keyboard_event_dispatcher_.DispatchEvent(engine::events::KeyboardEvent(sdl_event.key));
             break;
+        case SDL_MOUSEBUTTONDOWN:
+        case SDL_MOUSEBUTTONUP:
+            mouse_event_dispatcher_.DispatchEvent(engine::events::MouseButtonEvent(sdl_event.button));
+            break;
+        //TODO
+        //case SDL_MOUSEMOTION:
         default:
             break;
         }
     }
     events_this_frame_.clear();
 
+    // Clear after dispatch
     if (listeners_to_remove_.empty() == false)
     {
         RemoveListeners();
@@ -68,14 +72,15 @@ void InputProcessor::Update()
 
 void InputProcessor::RemoveListeners()
 {
-    const unsigned int keyboard_event_hash = engine::events::KeyboardEvent::GetEventID().GetHash();
-
     for (engine::events::EventReceipt& receipt : listeners_to_remove_)
     {
-        const unsigned int receipt_event_hash = receipt.GetEventID().GetHash();
-        if (receipt_event_hash == keyboard_event_hash)
+        if (receipt.GetEventID() == engine::events::KeyboardEvent::GetEventID())
         {
             keyboard_event_dispatcher_.RemoveListener(receipt);
+        }
+        else if (receipt.GetEventID() == engine::events::MouseButtonEvent::GetEventID())
+        {
+            mouse_event_dispatcher_.RemoveListener(receipt);
         }
     }
 

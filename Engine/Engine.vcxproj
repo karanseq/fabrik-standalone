@@ -336,7 +336,10 @@
     <ClInclude Include="Source\Data\StringPool.h" />
     <ClInclude Include="Source\Events\EventDispatcher-inl.h" />
     <ClInclude Include="Source\Events\EventDispatcher.h" />
+    <ClInclude Include="Source\Events\EventReceipt-inl.h" />
+    <ClInclude Include="Source\Events\EventReceipt.h" />
     <ClInclude Include="Source\Events\KeyboardEvent.h" />
+    <ClInclude Include="Source\Events\MouseButtonEvent.h" />
     <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Graphics\ShaderBuilder.h" />
     <ClInclude Include="Source\Input\InputProcessor-inl.h" />
@@ -396,6 +399,7 @@
     <ClCompile Include="Source\Data\Private\PooledString.cpp" />
     <ClCompile Include="Source\Data\Private\StringPool.cpp" />
     <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp" />
+    <ClCompile Include="Source\Events\Private\MouseButtonEvent.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp" />
     <ClCompile Include="Source\Input\Private\InputProcessor.cpp" />

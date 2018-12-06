@@ -285,6 +285,15 @@
     <ClInclude Include="Source\Input\InputProcessor-inl.h">
       <Filter>Header Files\Input</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Events\EventReceipt.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\EventReceipt-inl.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Events\MouseButtonEvent.h">
+      <Filter>Header Files\Events</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp">
@@ -384,6 +393,9 @@
       <Filter>Source Files\Input</Filter>
     </ClCompile>
     <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp">
+      <Filter>Source Files\Events</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Events\Private\MouseButtonEvent.cpp">
       <Filter>Source Files\Events</Filter>
     </ClCompile>
   </ItemGroup>

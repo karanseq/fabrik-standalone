@@ -1,4 +1,4 @@
-#include "Application\SDLApplication.h"
+#include "Application/SDLApplication.h"
 
 // Library includes
 #ifdef BUILD_DEBUG
@@ -6,14 +6,15 @@
 #endif // BUILD_DEBUG
 
 // External includes
-#include "GL\glew.h"
-#include  "SDL.h"
+#include "GL/glew.h"
+#include "SDL.h"
 
 // Engine includes
-#include "Common\Engine.h"
-#include "Events\KeyboardEvent.h"
-#include "Input\InputProcessor.h"
-#include "Logger\Logger.h"
+#include "Common/Engine.h"
+#include "Events/KeyboardEvent.h"
+#include "Events/MouseButtonEvent.h"
+#include "Input/InputProcessor.h"
+#include "Logger/Logger.h"
 
 namespace engine {
 namespace application {
@@ -162,11 +163,16 @@ namespace application {
 
     bool SDLApplication::InitInputEventDispatchers()
     {
-        keyboard_event_receipt_ = engine::input::InputProcessor::Get()->AddListener<engine::events::KeyboardEvent>(
+        keyboard_event_receipt_ = engine::input::InputProcessor::Get()->AddListener(
             std::bind(&SDLApplication::OnKeyboardEvent, this, std::placeholders::_1)
             );
+        if (keyboard_event_receipt_.IsValid() == false)
+        {
+            LOG_ERROR("Couldn't add a keyboard event listener!");
+            return false;
+        }
 
-        return keyboard_event_receipt_.IsValid();
+        return true;
     }
 
     void SDLApplication::HandleSDLEvent(const SDL_Event& i_event)
@@ -182,8 +188,8 @@ namespace application {
 
     void SDLApplication::OnKeyboardEvent(const engine::events::KeyboardEvent& i_event)
     {
-        const SDL_Event& sdl_event = i_event.GetSDLEvent();
-        const SDL_Keycode keycode = sdl_event.key.keysym.sym;
+        const SDL_KeyboardEvent& sdl_event = i_event.GetSDLEvent();
+        const SDL_Keycode keycode = sdl_event.keysym.sym;
         if (keycode == SDLK_ESCAPE)
         {
             RequestShutdown();

@@ -2,11 +2,12 @@
 
 // Engine includes
 #include "Data/HashedString.h"
+#include "Events/EventReceipt.h"
 
 namespace engine {
 namespace events {
 
-const SDL_Event& KeyboardEvent::GetSDLEvent() const
+const SDL_KeyboardEvent& KeyboardEvent::GetSDLEvent() const
 {
     return sdl_event_;
 }
@@ -20,6 +21,11 @@ const engine::data::HashedString& KeyboardEvent::GetEventID()
 {
     static engine::data::HashedString event_id("KeyboardEvent");
     return event_id;
+}
+
+bool KeyboardEvent::IsReceiptApplicable(const engine::events::EventReceipt& i_receipt)
+{
+    return GetEventID() == i_receipt.GetEventID();
 }
 
 } // namespace events

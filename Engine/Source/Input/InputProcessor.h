@@ -2,21 +2,16 @@
 #define INPUT_PROCESSOR_H_
 
 // Library includes
+#include <vector>
 
 // External includes
 #include "SDL.h"
 
 // Engine includes
 #include "Events/EventDispatcher.h"
+#include "Events/EventReceipt.h"
 #include "Events/KeyboardEvent.h"
-#include "Input/InputTypes.h"
-
-// Forward declarations
-namespace engine {
-namespace events {
-    class KeyboardEvent;
-}
-}
+#include "Events/MouseButtonEvent.h"
 
 namespace engine {
 namespace input {
@@ -31,17 +26,12 @@ public:
     void HandleSDLEvent(const SDL_Event& i_sdl_event);
     void Update();
 
-    template<typename T>
-    inline engine::events::EventReceipt AddListener(const engine::events::CallbackType<T>& i_listener);
-    template<typename T>
+    inline engine::events::EventReceipt AddListener(const engine::events::CallbackType<engine::events::KeyboardEvent>& i_listener);
+    inline engine::events::EventReceipt AddListener(const engine::events::CallbackType<engine::events::MouseButtonEvent>& i_listener);
     inline void RemoveListener(engine::events::EventReceipt& io_receipt);
 
 private:
-    template<typename T>
-    inline void DispatchEvent(const T& i_event);
-    template<typename T>
-    inline engine::events::EventDispatcher<T>* GetEventDispatcher();
-    inline bool IsValidReceipt(const engine::events::EventReceipt& i_receipt) const;
+    inline bool IsReceiptValid(const engine::events::EventReceipt& i_receipt) const;
 
     void RemoveListeners();
 
@@ -57,6 +47,7 @@ private:
 
 private:
     engine::events::EventDispatcher<engine::events::KeyboardEvent>      keyboard_event_dispatcher_;
+    engine::events::EventDispatcher<engine::events::MouseButtonEvent>   mouse_event_dispatcher_;
     std::vector<SDL_Event>                                              events_this_frame_;
     std::vector<engine::events::EventReceipt>                           listeners_to_remove_;
 

@@ -11,7 +11,7 @@
 // Forward declarations
 namespace engine {
 namespace events {
-    class KeyboardEvent;
+    class MouseButtonEvent;
 }
 }
 
@@ -25,11 +25,15 @@ public:
     // ApplicationInterface implementation
 public:
     bool Init() override;
-    void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event) override;
 
     // Demo functions
 private:
+    void OnMouseEvent(const engine::events::MouseButtonEvent& i_event);
     void TestCompileShaders();
+
+    // Data
+private:
+    engine::events::EventReceipt            mouse_event_receipt_;
 
 }; // class DemoApplication
 

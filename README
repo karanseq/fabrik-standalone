@@ -3,7 +3,6 @@ Priority-0
 ----------
 - Mesh class
 - Shader class
-- SDL user input
 - Constant buffers
 - Texture loading
 - Assimp
@@ -13,3 +12,5 @@ Priority-1
 - Standardize to Unix style file path separators in #include
 - Update loop delay
 - constexpr-ify
+- Inline-ify events
+- Mouse motion event

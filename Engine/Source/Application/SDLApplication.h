@@ -9,7 +9,7 @@
 
 // Engine includes
 #include "Application/Application.h"
-#include "Events/EventDispatcher.h"
+#include "Events/EventReceipt.h"
 
 // Forward declarations
 namespace engine {
@@ -38,25 +38,22 @@ namespace application {
         void Render() override;
 
         // Implementation
-    protected:
-        virtual void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
-
     private:
         bool InitGLAttributes();
         bool InitInputEventDispatchers();
         void HandleSDLEvent(const SDL_Event& i_event);
+        void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
 
         // Data
     protected:
         uint16_t                                window_width_ = 800;
         uint16_t                                window_height_ = 600;
         const char*                             window_title_ = "SDL Application";
-        engine::events::EventReceipt            keyboard_event_receipt_;
-        engine::events::EventReceipt            mouse_event_receipt_;
 
     private:
         SDL_Window*                             window_ = nullptr;
         SDL_GLContext                           gl_context_;
+        engine::events::EventReceipt            keyboard_event_receipt_;
 
     }; // class SDLApplication
 
