@@ -1,8 +1,8 @@
 #include "Graphics/Program.h"
 
 // Engine includes
+#include "Assert/Assert.h"
 #include "Graphics/Shader.h"
-#include "Graphics/ShaderBuilder.h"
 #include "Memory/AllocatorOverrides.h"
 #include "Memory/UniquePointer.h"
 
@@ -50,7 +50,9 @@ bool Program::Initialize(const Shader& i_vertex_shader, const Shader& i_fragment
 
 void Program::Bind() const
 {
-
+    ASSERT(program_id_ != 0);
+    glUseProgram(program_id_);
+    ASSERT(glGetError() == GL_NO_ERROR);
 }
 
 } // namespace graphics

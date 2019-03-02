@@ -2,7 +2,6 @@
 
 // Engine includes
 #include "Assert/Assert.h"
-#include "Graphics/ShaderBuilder.h"
 #include "Logger/Logger.h"
 #include "Memory/AllocatorOverrides.h"
 #include "Memory/UniquePointer.h"

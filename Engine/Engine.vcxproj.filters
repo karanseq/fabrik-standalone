@@ -261,9 +261,6 @@
     <ClInclude Include="Source\Common\Engine.h">
       <Filter>Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Graphics\ShaderBuilder.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Application\SDLApplication.h">
       <Filter>Header Files\Application</Filter>
     </ClInclude>
@@ -394,9 +391,6 @@
     </ClCompile>
     <ClCompile Include="Source\Common\Private\Engine.cpp">
       <Filter>Source Files\Common</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp">
-      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="Source\Application\Private\SDLApplication.cpp">
       <Filter>Source Files\Application</Filter>

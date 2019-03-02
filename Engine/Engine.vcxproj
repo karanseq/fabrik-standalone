@@ -345,7 +345,6 @@
     <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Graphics\Shader-inl.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
-    <ClInclude Include="Source\Graphics\ShaderBuilder.h" />
     <ClInclude Include="Source\Input\InputProcessor-inl.h" />
     <ClInclude Include="Source\Input\InputProcessor.h" />
     <ClInclude Include="Source\Input\InputTypes.h" />
@@ -407,7 +406,6 @@
     <ClCompile Include="Source\Graphics\Private\Program.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Graphics\Private\Shader.cpp" />
-    <ClCompile Include="Source\Graphics\Private\ShaderBuilder.cpp" />
     <ClCompile Include="Source\Input\Private\InputProcessor.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
