@@ -7,6 +7,10 @@
 namespace engine {
 namespace events {
 
+KeyboardEvent::KeyboardEvent(const SDL_KeyboardEvent& i_sdl_event) :
+    sdl_event_(i_sdl_event)
+{}
+
 const SDL_KeyboardEvent& KeyboardEvent::GetSDLEvent() const
 {
     return sdl_event_;

@@ -22,9 +22,7 @@ class EventReceipt;
 class KeyboardEvent
 {
 public:
-    KeyboardEvent(const SDL_KeyboardEvent& i_sdl_event) :
-        sdl_event_(i_sdl_event)
-    {}
+    KeyboardEvent(const SDL_KeyboardEvent& i_sdl_event);
     ~KeyboardEvent() = default;
 
     const SDL_KeyboardEvent& GetSDLEvent() const;

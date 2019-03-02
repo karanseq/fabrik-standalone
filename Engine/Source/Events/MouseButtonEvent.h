@@ -22,9 +22,7 @@ class EventReceipt;
 class MouseButtonEvent
 {
 public:
-    MouseButtonEvent(const SDL_MouseButtonEvent& i_sdl_event) :
-        sdl_event_(i_sdl_event)
-    {}
+    MouseButtonEvent(const SDL_MouseButtonEvent& i_sdl_event);
     ~MouseButtonEvent() = default;
 
     const SDL_MouseButtonEvent& GetSDLEvent() const;

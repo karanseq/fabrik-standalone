@@ -29,7 +29,6 @@ public:
     // Demo functions
 private:
     void OnMouseEvent(const engine::events::MouseButtonEvent& i_event);
-    void TestCompileShaders();
 
     // Data
 private:

@@ -7,6 +7,10 @@
 namespace engine {
 namespace events {
 
+MouseButtonEvent::MouseButtonEvent(const SDL_MouseButtonEvent& i_sdl_event) :
+    sdl_event_(i_sdl_event)
+{}
+
 const SDL_MouseButtonEvent& MouseButtonEvent::GetSDLEvent() const
 {
     return sdl_event_;
