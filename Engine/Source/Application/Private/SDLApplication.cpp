@@ -83,6 +83,8 @@ namespace application {
 
             Update();
             Render();
+
+            SDL_GL_SwapWindow(window_);
         }
     }
 
@@ -107,7 +109,6 @@ namespace application {
     void SDLApplication::Render()
     {
         engine::Render();
-        SDL_GL_SwapWindow(window_);
     }
 
     bool SDLApplication::InitGLAttributes()

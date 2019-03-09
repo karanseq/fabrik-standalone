@@ -2,12 +2,31 @@
 
 // Engine includes
 #include "Assert/Assert.h"
+#include "Data/PooledString.h"
 #include "Graphics/Shader.h"
 #include "Memory/AllocatorOverrides.h"
 #include "Memory/UniquePointer.h"
+#include "Util/FileUtils.h"
 
 namespace engine {
 namespace graphics {
+
+bool Program::Initialize(const engine::data::PooledString& i_vertex_shader_path, const engine::data::PooledString& i_fragment_shader_path)
+{
+    Shader vertex_shader(Shader::ShaderType::VERTEX);
+    if (vertex_shader.Initialize(i_vertex_shader_path) == false)
+    {
+        return false;
+    }
+
+    Shader fragment_shader(Shader::ShaderType::FRAGMENT);
+    if (fragment_shader.Initialize(i_fragment_shader_path) == false)
+    {
+        return false;
+    }
+
+    return Initialize(vertex_shader, fragment_shader);
+}
 
 bool Program::Initialize(const Shader& i_vertex_shader, const Shader& i_fragment_shader)
 {

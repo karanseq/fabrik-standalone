@@ -5,9 +5,14 @@
 #include <GL/glew.h>
 
 namespace engine {
-namespace graphics {
 
 // Forward declarations
+namespace data {
+class PooledString;
+}
+
+namespace graphics {
+
 class Shader;
 
 class Program
@@ -16,6 +21,7 @@ public:
     Program() = default;
     ~Program() = default;
 
+    bool Initialize(const engine::data::PooledString& i_vertex_shader_path, const engine::data::PooledString& i_fragment_shader_path);
     bool Initialize(const Shader& i_vertex_shader, const Shader& i_fragment_shader);
     void Bind() const;
 

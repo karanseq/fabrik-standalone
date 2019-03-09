@@ -4,10 +4,6 @@
 // library includes
 #include <math.h>
 
-#define M_PI                    3.14159265358979323846f  /* pi */
-#define MIN_EPSILON             1.0e-9f
-#define MAX_EPSILON             1.0e-3f
-
 namespace engine {
 namespace math {
 
@@ -25,14 +21,18 @@ class Mat44;
 class Vec3D;
 }
 
+constexpr double        PI = 3.14159265358979323846;
+constexpr float         MIN_EPSILON = 1.0e-9f;
+constexpr float         MAX_EPSILON = 1.0e-3f;
+
 inline float RadiansToDegrees(float i_radians)
 {
-    return (i_radians * 180.0f / M_PI);
+    return (i_radians * 180.0f / float(PI));
 }
 
 inline float DegreesToRadians(float i_degrees)
 {
-    return (i_degrees * M_PI / 180.0f);
+    return (i_degrees * float(PI) / 180.0f);
 }
 
 inline bool IsNaN(float i_number)
@@ -49,6 +49,12 @@ inline bool FuzzyEquals(float i_lhs, float i_rhs, float i_epsilon = MAX_EPSILON)
 inline bool IsZero(float i_number)
 {
     return FuzzyEquals(i_number, MIN_EPSILON);
+}
+
+template<typename T>
+inline T Clamp(const T i_value, const T i_min, const T i_max)
+{
+    return (i_value < i_min ? i_min : (i_value > i_max ? i_max : i_value));
 }
 
 inline float GetMinOfFour(float i_first, float i_second, float i_third, float i_fourth)
