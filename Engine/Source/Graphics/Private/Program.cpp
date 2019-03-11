@@ -4,6 +4,9 @@
 #include "Assert/Assert.h"
 #include "Data/PooledString.h"
 #include "Graphics/Shader.h"
+#include "Math/Mat44.h"
+#include "Math/Vec4D.h"
+#include "Math/Vec3D.h"
 #include "Memory/AllocatorOverrides.h"
 #include "Memory/UniquePointer.h"
 #include "Util/FileUtils.h"
@@ -33,7 +36,7 @@ bool Program::Initialize(const Shader& i_vertex_shader, const Shader& i_fragment
     // Get a program handle
     GLuint program_id = glCreateProgram();
 
-    // Attached the shaders
+    // Attach the shaders
     glAttachShader(program_id, i_vertex_shader.GetShaderID());
     glAttachShader(program_id, i_fragment_shader.GetShaderID());
 
@@ -71,6 +74,57 @@ void Program::Bind() const
 {
     ASSERT(program_id_ != 0);
     glUseProgram(program_id_);
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const engine::math::Mat44& i_matrix) const
+{
+    static constexpr GLsizei        count = 1;
+    static constexpr GLboolean      transpose = GL_TRUE;
+
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniformMatrix4fv(id, count, transpose, reinterpret_cast<const GLfloat*>(&i_matrix));
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const engine::math::Vec4D& i_vector) const
+{
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniform4f(id, i_vector.x(), i_vector.y(), i_vector.z(), i_vector.w());
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const engine::math::Vec3D& i_vector) const
+{
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniform3f(id, i_vector.x(), i_vector.y(), i_vector.z());
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const float i_value) const
+{
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniform1f(id, i_value);
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const uint32_t i_value) const
+{
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniform1ui(id, i_value);
+    ASSERT(glGetError() == GL_NO_ERROR);
+}
+
+void Program::SetUniform(const char* i_uniform_name, const int32_t i_value) const
+{
+    glUseProgram(program_id_);
+    const GLint id = glGetUniformLocation(program_id_, reinterpret_cast<const GLchar*>(i_uniform_name));
+    glUniform1i(id, i_value);
     ASSERT(glGetError() == GL_NO_ERROR);
 }
 

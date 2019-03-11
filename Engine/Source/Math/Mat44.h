@@ -72,6 +72,12 @@ public:
     // scaling matrix
     static Mat44 GetScale(const float i_scale);
 
+    // projection matrix
+    static Mat44 GetPerspectiveProjection(const float i_fov, 
+        const float i_aspect_ratio, 
+        const float i_near_plane, 
+        const float i_far_plane);
+
 #ifdef BUILD_DEBUG
     void Print() const;
 #endif
