@@ -46,8 +46,8 @@ namespace application {
 
         // Data
     protected:
-        uint16_t                                window_width_ = 800;
-        uint16_t                                window_height_ = 600;
+        const uint16_t                          window_width_ = 800;
+        const uint16_t                          window_height_ = 600;
         const char*                             window_title_ = "SDL Application";
 
     private:

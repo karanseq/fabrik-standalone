@@ -341,8 +341,10 @@
     <ClInclude Include="Source\Events\KeyboardEvent.h" />
     <ClInclude Include="Source\Events\MouseButtonEvent.h" />
     <ClInclude Include="Source\Graphics\Color.h" />
+    <ClInclude Include="Source\Graphics\Mesh.h" />
     <ClInclude Include="Source\Graphics\Program-inl.h" />
     <ClInclude Include="Source\Graphics\Program.h" />
+    <ClInclude Include="Source\Graphics\RenderData.h" />
     <ClInclude Include="Source\Graphics\Renderer.h" />
     <ClInclude Include="Source\Graphics\Shader-inl.h" />
     <ClInclude Include="Source\Graphics\Shader.h" />
@@ -405,6 +407,7 @@
     <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp" />
     <ClCompile Include="Source\Events\Private\MouseButtonEvent.cpp" />
     <ClCompile Include="Source\Graphics\Private\Color.cpp" />
+    <ClCompile Include="Source\Graphics\Private\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\Private\Program.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
     <ClCompile Include="Source\Graphics\Private\Shader.cpp" />
