@@ -411,19 +411,5 @@ Mat44 Mat44::GetScale(const float i_scale)
                  0.0f, 0.0f, 0.0f, 1.0f);
 }
 
-Mat44 Mat44::GetPerspectiveProjection(const float i_fov, 
-    const float i_aspect_ratio, 
-    const float i_near_plane, 
-    const float i_far_plane)
-{
-    const float y_scale = 1.0f / std::tan(i_fov * 0.5f);
-    const float x_scale = y_scale / i_aspect_ratio;
-    const float z_diff_inverse = 1.0f / (i_near_plane - i_far_plane);
-    return Mat44(x_scale, 0.0f, 0.0f, 0.0f,
-                 0.0f, y_scale, 0.0f, 0.0f,
-                 0.0f, 0.0f, (i_near_plane + i_far_plane) * z_diff_inverse, (2.0f * i_near_plane * i_far_plane) * z_diff_inverse,
-                 0.0f, 0.0f, -1.0f, 0.0f);
-}
-
 } // namespace math
 } // namespace engine

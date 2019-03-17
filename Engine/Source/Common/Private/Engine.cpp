@@ -1,4 +1,4 @@
-#include "Common\Engine.h"
+#include "Common/Engine.h"
 
 // library includes
 #include <stdlib.h>
@@ -6,30 +6,38 @@
 //#include <time.h>
 
 // engine includes
-#include "Data\StringPool.h"
-#include "Graphics\Renderer.h"
-#include "Input\InputProcessor.h"
-#include "Logger\Logger.h"
-#include "Memory\AllocatorUtil.h"
-#include "Util\FileUtils.h"
+#include "Data/StringPool.h"
+#include "Graphics/Renderer.h"
+#include "Input/InputProcessor.h"
+#include "Logger/Logger.h"
+#include "Memory/AllocatorUtil.h"
+#include "Time/TimerUtil.h"
+#include "Time/Updater.h"
+#include "Util/FileUtils.h"
 
 namespace engine {
 
 static bool g_was_shutdown_requested = false;
 
-bool Init()
+bool Init(SDL_Window* i_window)
 {
     // create allocators
-    engine::memory::CreateAllocators();
+    memory::CreateAllocators();
+
+    // create renderer
+    graphics::Renderer::Create(i_window);
 
     // create string pools
-    engine::data::StringPool::Create();
+    data::StringPool::Create();
 
     // create file util
-    engine::util::FileUtils::Create();
+    util::FileUtils::Create();
+
+    // create updater
+    time::Updater::Create();
 
     // initialize input
-    engine::input::InputProcessor::Create();
+    input::InputProcessor::Create();
 
     g_was_shutdown_requested = false;
 
@@ -38,17 +46,21 @@ bool Init()
 
 void Update()
 {
-    engine::input::InputProcessor::Get()->Update();
+    static input::InputProcessor* input_processor = input::InputProcessor::Get();
+    static time::Updater* updater = time::Updater::Get();
+
+    const float dt = time::TimerUtil::CalculateLastFrameTime_ms();
+
+    input_processor->Update();
+    updater->Update(dt);
 }
 
 void Render()
 {
-    engine::graphics::Render();
-}
-
-void HandleSDLEvent(const SDL_Event& i_event)
-{
-    engine::input::InputProcessor::Get()->HandleSDLEvent(i_event);
+    static graphics::Renderer* renderer = graphics::Renderer::Get();
+    renderer->StartCurrentFrame();
+    renderer->Draw();
+    renderer->EndCurrentFrame();
 }
 
 void RequestShutdown()
@@ -72,16 +84,22 @@ void Shutdown()
 #endif
 
     // shutdown the input
-    engine::input::InputProcessor::Destroy();
+    input::InputProcessor::Destroy();
+
+    // delete updater
+    time::Updater::Destroy();
 
     // delete file util
-    engine::util::FileUtils::Destroy();
+    util::FileUtils::Destroy();
 
     // delete string pools
-    engine::data::StringPool::Destroy();
+    data::StringPool::Destroy();
+
+    // delete the renderer
+    graphics::Renderer::Destroy();
 
     // delete allocators
-    engine::memory::DestroyAllocators();
+    memory::DestroyAllocators();
 
 #ifdef BUILD_DEBUG
     LOG("---------- %s END ----------", __FUNCTION__);

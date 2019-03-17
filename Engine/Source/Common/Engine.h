@@ -3,13 +3,13 @@
 
 // Forward declarations
 union SDL_Event;
+struct SDL_Window;
 
 namespace engine {
 
-bool Init();
+bool Init(SDL_Window* i_window);
 void Update();
 void Render();
-void HandleSDLEvent(const SDL_Event& i_event);
 
 void RequestShutdown();
 bool WasShutdownRequested();

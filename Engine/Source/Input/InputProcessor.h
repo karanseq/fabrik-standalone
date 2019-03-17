@@ -23,7 +23,6 @@ public:
     static void Destroy();
     static inline InputProcessor* Get() { return instance_; }
 
-    void HandleSDLEvent(const SDL_Event& i_sdl_event);
     void Update();
 
     inline engine::events::EventReceipt AddListener(const engine::events::CallbackType<engine::events::KeyboardEvent>& i_listener);
@@ -32,7 +31,6 @@ public:
 
 private:
     inline bool IsReceiptValid(const engine::events::EventReceipt& i_receipt) const;
-
     void RemoveListeners();
 
 private:

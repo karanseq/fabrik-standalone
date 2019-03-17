@@ -19,9 +19,6 @@ namespace application {
         virtual void Run() = 0;
         virtual void Shutdown() = 0;
 
-        virtual void Update() = 0;
-        virtual void Render() = 0;
-
     protected:
         static ApplicationInterface* g_application;
 

@@ -21,41 +21,35 @@ namespace events {
 namespace engine {
 namespace application {
 
-    class SDLApplication : public ApplicationInterface
-    {
-    public:
-        SDLApplication() = default;
-        SDLApplication(const char* i_window_title);
-        virtual ~SDLApplication() = default;
+class SDLApplication : public ApplicationInterface
+{
+public:
+    SDLApplication() = default;
+    SDLApplication(const char* i_window_title);
+    virtual ~SDLApplication() = default;
 
-        // ApplicationInterface implementation
-    public:
-        bool Init() override;
-        void Run() override;
-        void Shutdown() override;
+    // ApplicationInterface implementation
+public:
+    bool Init() override;
+    void Run() override;
+    void Shutdown() override;
 
-        void Update() override;
-        void Render() override;
+    // Implementation
+private:
+    bool InitInputEventDispatchers();
+    void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
 
-        // Implementation
-    private:
-        bool InitGLAttributes();
-        bool InitInputEventDispatchers();
-        void HandleSDLEvent(const SDL_Event& i_event);
-        void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
+    // Data
+protected:
+    const uint16_t                          window_width_ = 800;
+    const uint16_t                          window_height_ = 600;
+    const char*                             window_title_ = "SDL Application";
 
-        // Data
-    protected:
-        const uint16_t                          window_width_ = 800;
-        const uint16_t                          window_height_ = 600;
-        const char*                             window_title_ = "SDL Application";
+private:
+    SDL_Window*                             window_ = nullptr;
+    engine::events::EventReceipt            keyboard_event_receipt_;
 
-    private:
-        SDL_Window*                             window_ = nullptr;
-        SDL_GLContext                           gl_context_;
-        engine::events::EventReceipt            keyboard_event_receipt_;
-
-    }; // class SDLApplication
+}; // class SDLApplication
 
 } // namespace application
 } // namespace engine

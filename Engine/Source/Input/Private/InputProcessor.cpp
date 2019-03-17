@@ -3,6 +3,7 @@
 // Library includes
 
 // Engine includes
+#include "Common/Engine.h"
 #include "Common/HelperMacros.h"
 
 namespace engine {
@@ -25,23 +26,30 @@ void InputProcessor::Destroy()
     SAFE_DELETE(InputProcessor::instance_);
 }
 
-void InputProcessor::HandleSDLEvent(const SDL_Event& i_sdl_event)
-{
-    switch (i_sdl_event.type)
-    {
-    case SDL_KEYDOWN:
-    case SDL_KEYUP:
-    case SDL_MOUSEBUTTONDOWN:
-    case SDL_MOUSEBUTTONUP:
-    case SDL_MOUSEMOTION:
-        events_this_frame_.push_back(i_sdl_event);
-    default:
-        break;
-    }
-}
-
 void InputProcessor::Update()
 {
+    events_this_frame_.clear();
+
+    // Accumulate all supported SDL events
+    {
+        SDL_Event event;
+        while (SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+            case SDL_KEYDOWN:
+            case SDL_KEYUP:
+            case SDL_MOUSEBUTTONDOWN:
+            case SDL_MOUSEBUTTONUP:
+            case SDL_MOUSEMOTION:
+            case SDL_QUIT:
+                events_this_frame_.push_back(event);
+            default:
+                break;
+            }
+        }
+    }
+
     // Dispatch events
     for (const auto& sdl_event : events_this_frame_)
     {
@@ -55,13 +63,12 @@ void InputProcessor::Update()
         case SDL_MOUSEBUTTONUP:
             mouse_event_dispatcher_.DispatchEvent(engine::events::MouseButtonEvent(sdl_event.button));
             break;
-        //TODO
-        //case SDL_MOUSEMOTION:
+        case SDL_QUIT:
+            engine::RequestShutdown();
         default:
             break;
         }
     }
-    events_this_frame_.clear();
 
     // Clear after dispatch
     if (listeners_to_remove_.empty() == false)

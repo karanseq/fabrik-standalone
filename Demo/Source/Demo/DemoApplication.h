@@ -2,13 +2,12 @@
 #define DEMO_APPLICATION_H_
 
 // Library includes
-#include <GL/glew.h>
 
 // External includes
 
 // Engine includes
 #include "Application/SDLApplication.h"
-#include "Graphics/Program.h"
+#include "Time/InterfaceTickable.h"
 
 // Forward declarations
 namespace engine {
@@ -17,7 +16,8 @@ namespace events {
 }
 }
 
-class DemoApplication : public engine::application::SDLApplication
+class DemoApplication : public engine::application::SDLApplication,
+                        public engine::time::InterfaceTickable
 {
 public:
     DemoApplication() : engine::application::SDLApplication("Renderer Demo")
@@ -28,9 +28,9 @@ public:
 public:
     bool Init() override;
 
+    // InterfaceTickable implementation
 private:
-    void Update() override;
-    void Render() override;
+    void Tick(float dt) override;
 
     // Demo functions
 private:
@@ -38,13 +38,11 @@ private:
     void OnKeyboardEvent(const engine::events::KeyboardEvent& i_event);
 
     void InitGraphicsProgram();
-    void InitTransforms();
 
     // Data
 private:
     engine::events::EventReceipt            mouse_event_receipt_;
     engine::events::EventReceipt            keyboard_event_receipt_;
-    engine::graphics::Program               graphics_program_;
     bool                                    is_forward_pressed_ = false;
     bool                                    is_back_pressed_ = false;
     bool                                    is_left_pressed_ = false;

@@ -1,5 +1,5 @@
-#ifndef INTERFACE_TICKABLE_H_
-#define INTERFACE_TICKABLE_H_
+#ifndef ENGINE_TIME_INTERFACE_TICKABLE_H_
+#define ENGINE_TIME_INTERFACE_TICKABLE_H_
 
 namespace engine {
 namespace time {
@@ -12,7 +12,7 @@ namespace time {
 class InterfaceTickable
 {
 public:
-    virtual ~InterfaceTickable() {}
+    virtual ~InterfaceTickable() = default;
 
     virtual void Tick(float dt) = 0;
 
@@ -21,4 +21,4 @@ public:
 } // namespace time
 } // namespace engine
 
-#endif // INTERFACE_TICKABLE_H_
+#endif // ENGINE_TIME_INTERFACE_TICKABLE_H_

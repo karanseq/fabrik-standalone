@@ -10,24 +10,25 @@
 #include "Data/PooledString.h"
 #include "Common/Engine.h"
 #include "Events/MouseButtonEvent.h"
+#include "Graphics/Camera.h"
 #include "Graphics/Color.h"
 #include "Graphics/Mesh.h"
+#include "Graphics/Program.h"
+#include "Graphics/Renderer.h"
 #include "Input/InputProcessor.h"
 #include "Logger/Logger.h"
 #include "Math/MathUtil.h"
 #include "Math/Mat44.h"
 #include "Math/Transform.h"
 #include "Math/Vec3D.h"
+#include "Time/Updater.h"
 #include "Util/FileUtils.h"
 
+engine::graphics::Program g_program;
+engine::graphics::Camera g_camera;
 engine::graphics::Mesh g_cube;
 
-engine::math::Mat44 g_model_matrix;
-engine::math::Mat44 g_camera_matrix;
-engine::math::Mat44 g_projection_matrix;
-
 engine::math::Transform g_model_transform;
-engine::math::Transform g_camera_transform;
 
 bool DemoApplication::Init()
 {
@@ -47,39 +48,41 @@ bool DemoApplication::Init()
     ASSERT(keyboard_event_receipt_.IsValid());//, "Couldn't add a keyboard event listener!"
 
     InitGraphicsProgram();
-    InitTransforms();
+
+    // Initialize the camera
+    {
+        g_camera.Initialize(engine::graphics::Camera::DEFAULT_FOV, float(window_width_) / float(window_height_));
+        engine::math::Transform camera_transform = g_camera.GetTransform();
+        camera_transform.SetPosition(engine::math::Vec3D(0.0f, 0.0f, -10.0f));
+        g_camera.SetTransform(camera_transform);
+    }
+
     g_cube.Initialize("");
+
+    engine::time::Updater::Get()->AddTickable(this);
 
     return true;
 }
 
-void DemoApplication::Update()
+void DemoApplication::Tick(float /*dt*/)
 {
-    SDLApplication::Update();
+    // Update based on input
+    {
+        static constexpr float camera_speed = 0.1f;
+        const engine::math::Vec3D camera_delta(
+            (is_left_pressed_ ? camera_speed : (is_right_pressed_ ? -camera_speed : 0.0f)),
+            (is_up_pressed_ ? -camera_speed : (is_down_pressed_ ? camera_speed : 0.0f)),
+            (is_forward_pressed_ ? camera_speed : (is_back_pressed_ ? -camera_speed : 0.0f))
+        );
+        g_camera.SetPosition(g_camera.GetPosition() + camera_delta);
+    }
 
-    static constexpr float camera_speed = 0.1f;
-    const engine::math::Vec3D camera_delta(
-        (is_left_pressed_ ? camera_speed : (is_right_pressed_ ? -camera_speed : 0.0f)),
-        (is_up_pressed_ ? -camera_speed : (is_down_pressed_ ? camera_speed : 0.0f)),
-        (is_forward_pressed_ ? camera_speed : (is_back_pressed_ ? -camera_speed : 0.0f))
-    );
-    g_camera_transform.SetPosition(g_camera_transform.GetPosition() + camera_delta);
-
-    engine::math::GetObjectToWorldTransform(g_camera_transform, g_camera_matrix);
-    engine::math::GetObjectToWorldTransform(g_model_transform, g_model_matrix);
-}
-
-void DemoApplication::Render()
-{
-    SDLApplication::Render();
-
-    graphics_program_.Bind();
-
-    graphics_program_.SetUniform("g_camera_view", g_projection_matrix);
-    graphics_program_.SetUniform("g_world_camera", g_camera_matrix);
-    graphics_program_.SetUniform("g_model_world", g_model_matrix);
-
-    g_cube.Draw();
+    // Submit stuff to be rendered
+    {
+        static engine::graphics::Renderer* renderer = engine::graphics::Renderer::Get();
+        renderer->SubmitCamera(g_camera);
+        renderer->SubmitMesh(g_cube, g_program, g_model_transform);
+    }
 }
 
 void DemoApplication::OnMouseEvent(const engine::events::MouseButtonEvent& i_event)
@@ -106,25 +109,9 @@ void DemoApplication::InitGraphicsProgram()
     static const engine::data::PooledString vertex_shader_file_path("Content\\Shaders\\mesh_vertex_shader.glsl");
     static const engine::data::PooledString fragment_shader_file_path("Content\\Shaders\\mesh_fragment_shader.glsl");
 
-    if (graphics_program_.Initialize(vertex_shader_file_path, fragment_shader_file_path) == false)
+    if (g_program.Initialize(vertex_shader_file_path, fragment_shader_file_path) == false)
     {
         LOG_ERROR("Failed to initialize the graphics program. Check above for details.");
         engine::RequestShutdown();
     }
-}
-
-void DemoApplication::InitTransforms()
-{
-    const engine::math::Vec3D camera_position = g_camera_transform.GetPosition() + 
-                                                engine::math::Vec3D(0.0f, 0.0f, -10.0f);
-    g_camera_transform.SetPosition(camera_position);
-    engine::math::GetObjectToWorldTransform(g_camera_transform, g_camera_matrix);
-
-    engine::math::GetObjectToWorldTransform(g_model_transform, g_model_matrix);
-
-    static constexpr float  fov = float(engine::math::PI) * 0.25f;
-    static const float      aspect_ratio = float(window_width_) / float(window_height_);
-    static constexpr float  near_plane = 0.1f;
-    static constexpr float  far_plane = 1000.0f;
-    g_projection_matrix = engine::math::Mat44::GetPerspectiveProjection(fov, aspect_ratio, near_plane, far_plane);
 }
