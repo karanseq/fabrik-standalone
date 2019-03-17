@@ -321,6 +321,9 @@
     <ClInclude Include="Source\Time\Updater.h">
       <Filter>Header Files\Time</Filter>
     </ClInclude>
+    <ClInclude Include="Source\Graphics\GLErrorHelper.h">
+      <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp">
@@ -439,6 +442,9 @@
     </ClCompile>
     <ClCompile Include="Source\Time\Private\Updater.cpp">
       <Filter>Source Files\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Graphics\Private\GLErrorHelper.cpp">
+      <Filter>Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

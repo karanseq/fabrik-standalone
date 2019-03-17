@@ -4,7 +4,9 @@
 #include "Assert/Assert.h"
 #include "Data/PooledString.h"
 #include "Graphics/Color.h"
+#include "Graphics/GLErrorHelper.h"
 #include "Graphics/RenderData.h"
+#include "Logger/Logger.h"
 #include "Math/Vec3D.h"
 
 namespace engine {
@@ -16,9 +18,9 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
     {
         constexpr GLsizei array_count = 1;
         glGenVertexArrays(array_count, &vertex_array_id_);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to generate vertex array");
         glBindVertexArray(vertex_array_id_);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to bind vertex array");
     }
 
     // Create a vertex buffer object and make it active
@@ -26,9 +28,9 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
     {
         constexpr GLsizei buffer_count = 1;
         glGenBuffers(buffer_count, &vertex_buffer_id);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to generate vertex buffer");
         glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer_id);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to bind vertex buffer");
     }
 
     // Assign data to the vertex buffer
@@ -47,8 +49,8 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
         };
 
         constexpr size_t buffer_size = vertex_count * sizeof(MeshVertexFormat);
-        // TODO: Add buffer size bounds checks
         glBufferData(GL_ARRAY_BUFFER, buffer_size, vertex_data, GL_STATIC_DRAW);
+        CheckAndPrintGLError("Failed to allocate vertex buffer");
         // Vertex data can be freed at this point
     }
 
@@ -57,11 +59,9 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
     {
         constexpr GLsizei buffer_count = 1;
         glGenBuffers(buffer_count, &index_buffer_id);
-        ASSERT(glGetError() == GL_NO_ERROR);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to generate index buffer");
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer_id);
-        ASSERT(glGetError() == GL_NO_ERROR);
-        // TODO: Add error handling here
+        CheckAndPrintGLError("Failed to bind index buffer");
     }
 
     // Assign data to the index buffer
@@ -79,7 +79,7 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
 
         constexpr size_t buffer_size = index_count * sizeof(uint32_t);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, buffer_size, indices, GL_STATIC_DRAW);
-        ASSERT(glGetError() == GL_NO_ERROR);
+        CheckAndPrintGLError("Failed to allocate index buffer");
     }
 
     // Initialize vertex attribute
@@ -96,9 +96,9 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
                 GL_FALSE,
                 stride, reinterpret_cast<void*>(offsetof(MeshVertexFormat, position))
             );
-            // TODO: Add error handling here
+            CheckAndPrintGLError("Failed to set 'position' vertex attribute");
             glEnableVertexAttribArray(vertex_position_location);
-            // TODO: Add error handling here
+            CheckAndPrintGLError("Failed to enable 'position' vertex attribute");
         }
 
         // Color
@@ -111,9 +111,9 @@ bool Mesh::Initialize(const engine::data::PooledString& /*i_file_path*/)
                 GL_TRUE,
                 stride, reinterpret_cast<void*>(offsetof(MeshVertexFormat, color))
             );
-            // TODO: Add error handling here
+            CheckAndPrintGLError("Failed to set 'color' vertex attribute");
             glEnableVertexAttribArray(vertex_color_location);
-            // TODO: Add error handling here
+            CheckAndPrintGLError("Failed to enable 'color' vertex attribute");
         }
     }
 

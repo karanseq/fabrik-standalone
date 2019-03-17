@@ -343,6 +343,7 @@
     <ClInclude Include="Source\Graphics\Camera-inl.h" />
     <ClInclude Include="Source\Graphics\Camera.h" />
     <ClInclude Include="Source\Graphics\Color.h" />
+    <ClInclude Include="Source\Graphics\GLErrorHelper.h" />
     <ClInclude Include="Source\Graphics\Mesh.h" />
     <ClInclude Include="Source\Graphics\Program-inl.h" />
     <ClInclude Include="Source\Graphics\Program.h" />
@@ -411,6 +412,7 @@
     <ClCompile Include="Source\Events\Private\MouseButtonEvent.cpp" />
     <ClCompile Include="Source\Graphics\Private\Camera.cpp" />
     <ClCompile Include="Source\Graphics\Private\Color.cpp" />
+    <ClCompile Include="Source\Graphics\Private\GLErrorHelper.cpp" />
     <ClCompile Include="Source\Graphics\Private\Mesh.cpp" />
     <ClCompile Include="Source\Graphics\Private\Program.cpp" />
     <ClCompile Include="Source\Graphics\Private\Renderer.cpp" />
