@@ -7,6 +7,42 @@
 namespace engine {
 namespace input {
 
+// Mouse button
+
+inline bool InputProcessor::IsLeftMouseButtonPressed(const SDL_MouseButtonEvent& i_event)
+{
+    return i_event.state == SDL_PRESSED && i_event.button == SDL_BUTTON_LEFT;
+}
+
+inline bool InputProcessor::IsRightMouseButtonPressed(const SDL_MouseButtonEvent& i_event)
+{
+    return i_event.state == SDL_PRESSED && i_event.button == SDL_BUTTON_RIGHT;
+}
+
+// Mouse motion
+
+inline int32_t InputProcessor::GetCurrentMouseX() const
+{
+    return current_mouse_motion_.x;
+}
+
+inline int32_t InputProcessor::GetCurrentMouseY() const
+{
+    return current_mouse_motion_.y;
+}
+
+inline int32_t InputProcessor::GetPreviousMouseX() const
+{
+    return previous_mouse_motion_.x;
+}
+
+inline int32_t InputProcessor::GetPreviousMouseY() const
+{
+    return previous_mouse_motion_.y;
+}
+
+// Listeners and event dispatchers
+
 inline engine::events::EventReceipt InputProcessor::AddListener(const engine::events::CallbackType<engine::events::KeyboardEvent>& i_listener)
 {
     return keyboard_event_dispatcher_.AddListener(i_listener);

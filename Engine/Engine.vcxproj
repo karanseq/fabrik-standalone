@@ -324,6 +324,10 @@
     <ClInclude Include="Source\Application\Application.h" />
     <ClInclude Include="Source\Application\SDLApplication.h" />
     <ClInclude Include="Source\Assert\Assert.h" />
+    <ClInclude Include="Source\Camera\Camera-inl.h" />
+    <ClInclude Include="Source\Camera\Camera.h" />
+    <ClInclude Include="Source\Camera\CameraController-inl.h" />
+    <ClInclude Include="Source\Camera\CameraController.h" />
     <ClInclude Include="Source\Common\Engine.h" />
     <ClInclude Include="Source\Common\HelperMacros.h" />
     <ClInclude Include="Source\Data\BitArray-inl.h" />
@@ -340,8 +344,6 @@
     <ClInclude Include="Source\Events\EventReceipt.h" />
     <ClInclude Include="Source\Events\KeyboardEvent.h" />
     <ClInclude Include="Source\Events\MouseButtonEvent.h" />
-    <ClInclude Include="Source\Graphics\Camera-inl.h" />
-    <ClInclude Include="Source\Graphics\Camera.h" />
     <ClInclude Include="Source\Graphics\Color.h" />
     <ClInclude Include="Source\Graphics\GLErrorHelper.h" />
     <ClInclude Include="Source\Graphics\Mesh.h" />
@@ -357,8 +359,6 @@
     <ClInclude Include="Source\Logger\Logger.h" />
     <ClInclude Include="Source\Math\AABB.h" />
     <ClInclude Include="Source\Math\Mat44-inl.h" />
-    <ClInclude Include="Source\Math\Mat44-SSE-inl.h" />
-    <ClInclude Include="Source\Math\Mat44-SSE.h" />
     <ClInclude Include="Source\Math\Mat44.h" />
     <ClInclude Include="Source\Math\MathUtil.h" />
     <ClInclude Include="Source\Math\Quaternion-inl.h" />
@@ -372,12 +372,8 @@
     <ClInclude Include="Source\Math\Vec2D-inl.h" />
     <ClInclude Include="Source\Math\Vec2D.h" />
     <ClInclude Include="Source\Math\Vec3D-inl.h" />
-    <ClInclude Include="Source\Math\Vec3D-SSE-inl.h" />
-    <ClInclude Include="Source\Math\Vec3D-SSE.h" />
     <ClInclude Include="Source\Math\Vec3D.h" />
     <ClInclude Include="Source\Math\Vec4D-inl.h" />
-    <ClInclude Include="Source\Math\Vec4D-SSE-inl.h" />
-    <ClInclude Include="Source\Math\Vec4D-SSE.h" />
     <ClInclude Include="Source\Math\Vec4D.h" />
     <ClInclude Include="Source\Memory\AllocationCounter-inl.h" />
     <ClInclude Include="Source\Memory\AllocationCounter.h" />
@@ -403,6 +399,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Application\Private\SDLApplication.cpp" />
+    <ClCompile Include="Source\Camera\Private\Camera.cpp" />
+    <ClCompile Include="Source\Camera\Private\CameraController.cpp" />
     <ClCompile Include="Source\Common\Private\Engine.cpp" />
     <ClCompile Include="Source\Data\Private\BitArray.cpp" />
     <ClCompile Include="Source\Data\Private\HashedString.cpp" />
@@ -410,7 +408,6 @@
     <ClCompile Include="Source\Data\Private\StringPool.cpp" />
     <ClCompile Include="Source\Events\Private\KeyboardEvent.cpp" />
     <ClCompile Include="Source\Events\Private\MouseButtonEvent.cpp" />
-    <ClCompile Include="Source\Graphics\Private\Camera.cpp" />
     <ClCompile Include="Source\Graphics\Private\Color.cpp" />
     <ClCompile Include="Source\Graphics\Private\GLErrorHelper.cpp" />
     <ClCompile Include="Source\Graphics\Private\Mesh.cpp" />
@@ -420,7 +417,6 @@
     <ClCompile Include="Source\Input\Private\InputProcessor.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
-    <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Mat44.cpp" />
     <ClCompile Include="Source\Math\Private\MathUtil.cpp" />
     <ClCompile Include="Source\Math\Private\Quaternion.cpp" />
@@ -428,9 +424,7 @@
     <ClCompile Include="Source\Math\Private\Size.cpp" />
     <ClCompile Include="Source\Math\Private\Transform.cpp" />
     <ClCompile Include="Source\Math\Private\Vec2D.cpp" />
-    <ClCompile Include="Source\Math\Private\Vec3D-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Vec3D.cpp" />
-    <ClCompile Include="Source\Math\Private\Vec4D-SSE.cpp" />
     <ClCompile Include="Source\Math\Private\Vec4D.cpp" />
     <ClCompile Include="Source\Memory\Private\AllocationCounter.cpp" />
     <ClCompile Include="Source\Memory\Private\AllocatorOverrides.cpp" />

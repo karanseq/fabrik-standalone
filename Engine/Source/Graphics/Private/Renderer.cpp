@@ -7,8 +7,8 @@
 
 // Engine includes
 #include "Assert/Assert.h"
+#include "Camera/Camera.h"
 #include "Common/HelperMacros.h"
-#include "Graphics/Camera.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Program.h"
 #include "Logger/Logger.h"
@@ -58,7 +58,11 @@ void Renderer::Draw() const
     glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
     math::Mat44 camera_transformation;
-    math::GetObjectToWorldTransform(camera_->GetTransform(), camera_transformation);
+    {
+        const math::Mat44 camera_rotation = math::Mat44::GetRotation(camera_->GetRotation());
+        const math::Mat44 camera_translation = math::Mat44::GetTranslation(camera_->GetPosition());
+        camera_transformation = camera_rotation * camera_translation;
+    }
 
     for (const MeshRenderData& packet : mesh_render_data_)
     {

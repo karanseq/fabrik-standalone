@@ -8,9 +8,10 @@
 
 // Engine includes
 #include "Data/PooledString.h"
+#include "Camera/Camera.h"
+#include "Camera/CameraController.h"
 #include "Common/Engine.h"
 #include "Events/MouseButtonEvent.h"
-#include "Graphics/Camera.h"
 #include "Graphics/Color.h"
 #include "Graphics/Mesh.h"
 #include "Graphics/Program.h"
@@ -19,16 +20,20 @@
 #include "Logger/Logger.h"
 #include "Math/MathUtil.h"
 #include "Math/Mat44.h"
+#include "Math/Quaternion.h"
 #include "Math/Transform.h"
 #include "Math/Vec3D.h"
+#include "Memory/SharedPointer.h"
 #include "Time/Updater.h"
 #include "Util/FileUtils.h"
 
 engine::graphics::Program g_program;
-engine::graphics::Camera g_camera;
-engine::graphics::Mesh g_cube;
+engine::memory::SharedPointer<engine::graphics::Camera> g_camera;
+engine::graphics::CameraController g_camera_controller;
 
-engine::math::Transform g_model_transform;
+constexpr uint8_t g_num_cubes = 9;
+engine::graphics::Mesh g_cube;
+engine::math::Transform g_cube_transforms[g_num_cubes];
 
 bool DemoApplication::Init()
 {
@@ -51,13 +56,20 @@ bool DemoApplication::Init()
 
     // Initialize the camera
     {
-        g_camera.Initialize(engine::graphics::Camera::DEFAULT_FOV, float(window_width_) / float(window_height_));
-        engine::math::Transform camera_transform = g_camera.GetTransform();
+        g_camera = new engine::graphics::Camera();
+        g_camera->Initialize(engine::graphics::Camera::DEFAULT_FOV, float(window_width_) / float(window_height_));
+        engine::math::Transform camera_transform = g_camera->GetTransform();
         camera_transform.SetPosition(engine::math::Vec3D(0.0f, 0.0f, -10.0f));
-        g_camera.SetTransform(camera_transform);
+        g_camera->SetTransform(camera_transform);
+
+        g_camera_controller.SetCamera(g_camera);
     }
 
     g_cube.Initialize("");
+    for (uint8_t i = 0; i < g_num_cubes; ++i)
+    {
+        g_cube_transforms[i].SetPosition(engine::math::Vec3D(i % 3 * 2.5f, i / 3 * 2.5f, 0.0f));
+    }
 
     engine::time::Updater::Get()->AddTickable(this);
 
@@ -66,42 +78,22 @@ bool DemoApplication::Init()
 
 void DemoApplication::Tick(float /*dt*/)
 {
-    // Update based on input
+    static engine::graphics::Renderer* renderer = engine::graphics::Renderer::Get();
+    renderer->SubmitCamera(*g_camera);
+    for (const engine::math::Transform& transform : g_cube_transforms)
     {
-        static constexpr float camera_speed = 0.1f;
-        const engine::math::Vec3D camera_delta(
-            (is_left_pressed_ ? camera_speed : (is_right_pressed_ ? -camera_speed : 0.0f)),
-            (is_up_pressed_ ? -camera_speed : (is_down_pressed_ ? camera_speed : 0.0f)),
-            (is_forward_pressed_ ? camera_speed : (is_back_pressed_ ? -camera_speed : 0.0f))
-        );
-        g_camera.SetPosition(g_camera.GetPosition() + camera_delta);
-    }
-
-    // Submit stuff to be rendered
-    {
-        static engine::graphics::Renderer* renderer = engine::graphics::Renderer::Get();
-        renderer->SubmitCamera(g_camera);
-        renderer->SubmitMesh(g_cube, g_program, g_model_transform);
+        renderer->SubmitMesh(g_cube, g_program, transform);
     }
 }
 
 void DemoApplication::OnMouseEvent(const engine::events::MouseButtonEvent& i_event)
 {
-    const SDL_MouseButtonEvent& sdl_event = i_event.GetSDLEvent();
-    LOG("%s TYPE:%s BUTTON:%d X:%d Y:%d",
-        __FUNCTION__, (sdl_event.type == SDL_MOUSEBUTTONDOWN ? "DOWN" : "UP"), sdl_event.button, sdl_event.x, sdl_event.y);
+
 }
 
 void DemoApplication::OnKeyboardEvent(const engine::events::KeyboardEvent& i_event)
 {
-    const SDL_KeyboardEvent& sdl_event = i_event.GetSDLEvent();
-    is_forward_pressed_ = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_w;
-    is_back_pressed_    = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_s;
-    is_left_pressed_    = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_a;
-    is_right_pressed_   = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_d;
-    is_up_pressed_      = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_e;
-    is_down_pressed_    = sdl_event.state == SDL_PRESSED && sdl_event.keysym.sym == SDLK_q;
-    LOG("%s KEY:%d", __FUNCTION__, sdl_event.keysym.sym);
+
 }
 
 void DemoApplication::InitGraphicsProgram()

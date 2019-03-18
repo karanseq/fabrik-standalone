@@ -43,6 +43,23 @@ inline SharedPointer<T>& SharedPointer<T>::operator=(SharedPointer&& i_copy)
 }
 
 template<class T>
+inline SharedPointer<T>& SharedPointer<T>::operator=(T* i_object)
+{
+    // check for self assignment
+    if (object_ != i_object)
+    {
+        // release previously owned object
+        Release();
+
+        object_ = i_object;
+
+        // acquire newly owned object
+        Acquire();
+    }
+    return *this;
+}
+
+template<class T>
 inline T* SharedPointer<T>::operator->() const
 {
     return object_;

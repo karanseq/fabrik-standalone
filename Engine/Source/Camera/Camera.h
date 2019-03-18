@@ -61,7 +61,7 @@ private:
     float               far_plane_ = DEFAULT_FAR_PLANE;
 };
 
-} // namespace renderer
+} // namespace graphics
 } // namespace engine
 
 #include "Camera-inl.h"

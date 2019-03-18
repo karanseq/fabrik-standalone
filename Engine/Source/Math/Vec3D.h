@@ -19,7 +19,6 @@ class Vec3D
 {
 public:
     explicit Vec3D(float i_x = 0.0f, float i_y = 0.0f, float i_z = 0.0f);
-    Vec3D(const engine::math::optimized::Vec3D& i_copy);
     Vec3D(const Vec3D& i_copy);
 
     ~Vec3D() = default;

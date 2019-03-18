@@ -2,7 +2,7 @@
 #define MATH_UTIL_H_
 
 // library includes
-#include <math.h>
+#include <cmath>
 
 namespace engine {
 namespace math {
@@ -71,21 +71,20 @@ inline float GetMaxOfFour(float i_first, float i_second, float i_third, float i_
     return first_two > last_two ? first_two : last_two;
 }
 
-// dot products
+// Dot products
 float DotProduct(const Vec2D& i_v1, const Vec2D& i_v2);
 float DotProduct(const Vec3D& i_v1, const Vec3D& i_v2);
 float DotProduct(const engine::math::optimized::Vec3D& i_v1, const engine::math::optimized::Vec3D& i_v2);
 float DotProduct(const Quaternion& i_q1, const Quaternion& i_q2);
 
-// cross product
+// Cross product
 Vec3D CrossProduct(const Vec3D& i_v1, const Vec3D& i_v2);
 engine::math::optimized::Vec3D CrossProduct(const engine::math::optimized::Vec3D& i_v1, const engine::math::optimized::Vec3D& i_v2);
 
-// transforms
+// Transforms
 // the transform matrix as a result of this function must be left multiplied
 // with the vector/point that will be transformed
 void GetObjectToWorldTransform(const engine::math::Transform& i_transform, engine::math::Mat44& o_trans_mat);
-void GetObjectToWorldTransform(const engine::math::Transform& i_transform, engine::math::optimized::Mat44& o_trans_mat);
 
 } // namespace math
 } // namespace engine

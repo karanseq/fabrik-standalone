@@ -1,12 +1,13 @@
-#ifndef ENGINE_MAT44_H_
-#define ENGINE_MAT44_H_
+#ifndef ENGINE_MATH_MAT44_H_
+#define ENGINE_MATH_MAT44_H_
 
+// Engine includes
 #include "Vec4D.h"
 
 namespace engine {
 namespace math {
 
-// forward declarations
+// Forward declarations
 class Quaternion;
 class Vec3D;
 
@@ -65,6 +66,7 @@ public:
     static Mat44 GetTranslation(const Vec3D& i_translation);
 
     // rotation matrices
+    static Mat44 GetRotation(const Quaternion& i_rotation);
     static Mat44 GetRotationX(const float i_radians);
     static Mat44 GetRotationY(const float i_radians);
     static Mat44 GetRotationZ(const float i_radians);
@@ -99,4 +101,4 @@ inline Vec4D operator*(const Vec4D& i_left, const Mat44& i_right);
 
 #include "Mat44-inl.h"
 
-#endif // ENGINE_MAT44_H_
+#endif // ENGINE_MATH_MAT44_H_

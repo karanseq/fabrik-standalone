@@ -50,30 +50,30 @@ Mat44::Mat44(const Quaternion& i_rotation, const Vec3D& i_translation) :
     m03(i_translation.x()), m13(i_translation.y()), m23(i_translation.z()),
     m30(0.0f), m31(0.0f), m32(0.0f), m33(1.0f)
 {
-    const auto _2x = i_rotation.x() + i_rotation.x();
-    const auto _2y = i_rotation.y() + i_rotation.y();
-    const auto _2z = i_rotation.z() + i_rotation.z();
-    const auto _2xx = i_rotation.x() * _2x;
-    const auto _2xy = _2x * i_rotation.y();
-    const auto _2xz = _2x * i_rotation.z();
-    const auto _2xw = _2x * i_rotation.w();
-    const auto _2yy = _2y * i_rotation.y();
-    const auto _2yz = _2y * i_rotation.z();
-    const auto _2yw = _2y * i_rotation.w();
-    const auto _2zz = _2z * i_rotation.z();
-    const auto _2zw = _2z * i_rotation.w();
+    const float x2 = i_rotation.x() + i_rotation.x();
+    const float y2 = i_rotation.y() + i_rotation.y();
+    const float z2 = i_rotation.z() + i_rotation.z();
+    const float x2x = i_rotation.x() * x2;
+    const float x2y = x2 * i_rotation.y();
+    const float x2z = x2 * i_rotation.z();
+    const float x2w = x2 * i_rotation.w();
+    const float y2y = y2 * i_rotation.y();
+    const float y2z = y2 * i_rotation.z();
+    const float y2w = y2 * i_rotation.w();
+    const float z2z = z2 * i_rotation.z();
+    const float z2w = z2 * i_rotation.w();
 
-    m00 = 1.0f - _2yy - _2zz;
-    m01 = _2xy - _2zw;
-    m02 = _2xz + _2yw;
+    m00 = 1.0f - y2y - z2z;
+    m01 = x2y + z2w;
+    m02 = x2z - y2w;
 
-    m10 = _2xy + _2zw;
-    m11 = 1.0f - _2xx - _2zz;
-    m12 = _2yz - _2xw;
+    m10 = x2y - z2w;
+    m11 = 1.0f - x2x - z2z;
+    m12 = y2z + x2w;
 
-    m20 = _2xz - _2yw;
-    m21 = _2yz + _2xw;
-    m22 = 1.0f - _2xx - _2yy;
+    m20 = x2z + y2w;
+    m21 = y2z + x2w;
+    m22 = 1.0f - x2x - y2y;
 }
 
 Mat44::~Mat44()
@@ -373,6 +373,27 @@ Mat44 Mat44::GetTranslation(const Vec3D& i_translation)
                  0.0f, 1.0f, 0.0f, i_translation.y(),
                  0.0f, 0.0f, 1.0f, i_translation.z(),
                  0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+Mat44 Mat44::GetRotation(const Quaternion& i_rotation)
+{
+    const float x2 = i_rotation.x() + i_rotation.x();
+    const float y2 = i_rotation.y() + i_rotation.y();
+    const float z2 = i_rotation.z() + i_rotation.z();
+    const float x2x = i_rotation.x() * x2;
+    const float x2y = x2 * i_rotation.y();
+    const float x2z = x2 * i_rotation.z();
+    const float x2w = x2 * i_rotation.w();
+    const float y2y = y2 * i_rotation.y();
+    const float y2z = y2 * i_rotation.z();
+    const float y2w = y2 * i_rotation.w();
+    const float z2z = z2 * i_rotation.z();
+    const float z2w = z2 * i_rotation.w();
+
+    return Mat44(1.0f - y2y - z2z, x2y + z2w, x2z - y2w, 0.0f,
+                x2y - z2w, 1.0f - x2x - z2z, y2z + x2w, 0.0f,
+                x2z + y2w, y2z + x2w, 1.0f - x2x - y2y, 0.0f,
+                0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Mat44 Mat44::GetRotationX(const float i_radians)

@@ -58,6 +58,7 @@ public:
     
     inline SharedPointer& operator=(const SharedPointer& i_copy);
     inline SharedPointer& operator=(SharedPointer&& i_copy);
+    inline SharedPointer& operator=(T* i_object);
 
     inline T* operator->() const;
     inline T& operator*() const;

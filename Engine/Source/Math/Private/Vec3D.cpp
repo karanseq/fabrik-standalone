@@ -1,10 +1,7 @@
 #include "Math\Vec3D.h"
 
-// library includes
+// Library includes
 #include <cmath>
-
-// engine includes
-#include "Math\Vec3D-SSE.h"
 
 namespace engine {
 namespace math {
@@ -18,13 +15,6 @@ const Vec3D Vec3D::UNIT_Z(0.0f, 0.0f, 1.0f);
 Vec3D::Vec3D(float i_x, float i_y, float i_z) : x_(i_x),
     y_(i_y),
     z_(i_z)
-{
-    ASSERT(!IsNaN(x_) && !IsNaN(y_) && !IsNaN(z_));
-}
-
-Vec3D::Vec3D(const engine::math::optimized::Vec3D& i_copy) : x_(i_copy.x()),
-    y_(i_copy.y()),
-    z_(i_copy.z())
 {
     ASSERT(!IsNaN(x_) && !IsNaN(y_) && !IsNaN(z_));
 }

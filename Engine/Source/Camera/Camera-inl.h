@@ -71,6 +71,5 @@ inline void Camera::SetRotation(engine::math::Quaternion& i_rotation)
     transform_.SetRotation(i_rotation);
 }
 
-} // namespace renderer
+} // namespace graphics
 } // namespace engine
-

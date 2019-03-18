@@ -12,6 +12,7 @@ namespace graphics {
 
 void CheckAndPrintGLError(const char* i_operation)
 {
+#ifdef BUILD_DEBUG
     const GLenum error_code = glGetError();
     if (error_code != GL_NO_ERROR)
     {
@@ -39,6 +40,7 @@ void CheckAndPrintGLError(const char* i_operation)
             break;
         }
     }
+#endif
 }
 
 } // namespace graphics

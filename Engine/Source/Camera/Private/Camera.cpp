@@ -1,4 +1,4 @@
-#include "Graphics/Camera.h"
+#include "Camera/Camera.h"
 
 // System includes
 #include <cmath>
@@ -17,5 +17,5 @@ void Camera::RecomputeProjection()
         0.0f, 0.0f, -1.0f, 0.0f);
 }
 
-} // namespace renderer
+} // namespace graphics
 } // namespace engine

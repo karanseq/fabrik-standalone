@@ -82,6 +82,12 @@
     <Filter Include="Source Files\Events">
       <UniqueIdentifier>{c3e44d6d-8122-4de6-b671-d02a340eaff2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Camera">
+      <UniqueIdentifier>{5ea4e193-a0ed-47bd-90ed-75c68d8e0db7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Camera">
+      <UniqueIdentifier>{e3db1f78-95ca-4a98-93c9-625151f36566}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -148,24 +154,6 @@
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Math\AABB.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vec3D-SSE.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vec4D-SSE.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vec3D-SSE-inl.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Vec4D-SSE-inl.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Mat44-SSE.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Math\Mat44-SSE-inl.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="Source\Application\Application.h">
@@ -312,17 +300,23 @@
     <ClInclude Include="Source\Graphics\RenderData.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Graphics\Camera.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Source\Graphics\Camera-inl.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Source\Time\Updater.h">
       <Filter>Header Files\Time</Filter>
     </ClInclude>
     <ClInclude Include="Source\Graphics\GLErrorHelper.h">
       <Filter>Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\Camera.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\Camera-inl.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraController.h">
+      <Filter>Header Files\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Camera\CameraController-inl.h">
+      <Filter>Header Files\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -360,15 +354,6 @@
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Math\Private\AABB.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Private\Vec3D-SSE.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Private\Vec4D-SSE.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="Source\Math\Private\Mat44-SSE.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="Source\Math\Private\Quaternion.cpp">
@@ -437,14 +422,17 @@
     <ClCompile Include="Source\Graphics\Private\Mesh.cpp">
       <Filter>Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Graphics\Private\Camera.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Time\Private\Updater.cpp">
       <Filter>Source Files\Time</Filter>
     </ClCompile>
     <ClCompile Include="Source\Graphics\Private\GLErrorHelper.cpp">
       <Filter>Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\Private\Camera.cpp">
+      <Filter>Source Files\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Camera\Private\CameraController.cpp">
+      <Filter>Source Files\Camera</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
