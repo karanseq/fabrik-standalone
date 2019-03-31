@@ -1,15 +1,16 @@
-#include "Math\Mat44.h"
+#include "Math/Mat44.h"
 
 // library includes
 #include <cmath>
 
 // engine includes
-#include "Assert\Assert.h"
-#include "Logger\Logger.h"
-#include "Math\MathUtil.h"
-#include "Math\Quaternion.h"
-#include "Math\Vec3D.h"
-#include "Math\Vec4D.h"
+#include "Assert/Assert.h"
+#include "Logger/Logger.h"
+#include "Math/Euler.h"
+#include "Math/MathUtil.h"
+#include "Math/Quaternion.h"
+#include "Math/Vec3D.h"
+#include "Math/Vec4D.h"
 
 namespace engine {
 namespace math {
@@ -74,6 +75,33 @@ Mat44::Mat44(const Quaternion& i_rotation, const Vec3D& i_translation) :
     m20 = x2z + y2w;
     m21 = y2z + x2w;
     m22 = 1.0f - x2x - y2y;
+}
+
+Mat44::Mat44(const Euler& i_rotation, const Vec3D& i_translation) :
+    m03(i_translation.x()), m13(i_translation.y()), m23(i_translation.z()),
+    m30(0.0f), m31(0.0f), m32(0.0f), m33(1.0f)
+{
+    const float y = DegreesToRadians(i_rotation.Yaw());
+    const float p = DegreesToRadians(i_rotation.Pitch());
+    const float r = DegreesToRadians(i_rotation.Roll());
+    const float sy = std::sinf(y);
+    const float cy = std::cosf(y);
+    const float sp = std::sinf(p);
+    const float cp = std::cosf(p);
+    const float sr = std::sinf(r);
+    const float cr = std::cosf(r);
+
+    m00 = cy * cr;
+    m01 = -cy * sr * cp + sy * sp;
+    m02 = cy * sr * sp + sy * cp;
+
+    m10 = sr;
+    m11 = cr * cp;
+    m12 = -cr * sp;
+
+    m20 = -sy * cr;
+    m21 = sy * sr * cp + cy * sp;
+    m22 = -sy * sr * sp + cy * cp;
 }
 
 Mat44::~Mat44()
@@ -394,6 +422,24 @@ Mat44 Mat44::GetRotation(const Quaternion& i_rotation)
                 x2y - z2w, 1.0f - x2x - z2z, y2z + x2w, 0.0f,
                 x2z + y2w, y2z + x2w, 1.0f - x2x - y2y, 0.0f,
                 0.0f, 0.0f, 0.0f, 1.0f);
+}
+
+Mat44 Mat44::GetRotation(const Euler& i_euler)
+{
+    const float y = DegreesToRadians(i_euler.Yaw());
+    const float p = DegreesToRadians(i_euler.Pitch());
+    const float r = DegreesToRadians(i_euler.Roll());
+    const float sy = std::sinf(y);
+    const float cy = std::cosf(y);
+    const float sp = std::sinf(p);
+    const float cp = std::cosf(p);
+    const float sr = std::sinf(r);
+    const float cr = std::cosf(r);
+
+    return Mat44(cy * cr, -cy * sr * cp + sy * sp, cy * sr * sp + sy * cp, 0.0f,
+                 sr, cr * cp, -cr * sp, 0.0f,
+                 -sy * cr, sy * sr * cp + cy * sp, -sy * sr * sp + cy * cp, 0.0f,
+                 0.0f, 0.0f, 0.0f, 1.0f);
 }
 
 Mat44 Mat44::GetRotationX(const float i_radians)

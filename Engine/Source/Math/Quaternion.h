@@ -5,6 +5,7 @@ namespace engine {
 namespace math {
 
 // Forward declarations
+class Euler;
 class Vec3D;
 
 /*
@@ -18,11 +19,12 @@ public:
     Quaternion() = default;
     Quaternion(float i_angle_radians, const Vec3D& i_axis);
     Quaternion(float i_w, float i_x, float i_y, float i_z);
+    Quaternion(const Euler& i_euler);
     Quaternion(const Quaternion& i_quat);
 
     ~Quaternion() = default;
 
-    // accessors and mutators
+    // Accessors and mutators
     inline float w() const;
     inline void w(float i_w);
     inline float x() const;
@@ -32,10 +34,10 @@ public:
     inline float z() const;
     inline void z(float i_z);
 
-    // assignment
+    // Assignment
     inline Quaternion& operator=(const Quaternion& i_quat);
 
-    // arithmetic
+    // Arithmetic
     inline Quaternion operator+(const Quaternion& i_quat) const;
     inline Quaternion& operator+=(const Quaternion& i_quat);
     inline Quaternion operator-(const Quaternion& i_quat) const;
@@ -45,18 +47,18 @@ public:
     inline Quaternion operator*(float i_scale) const;
     inline Quaternion& operator*=(float i_scale);
 
-    // relational
+    // Relational
     inline bool operator==(const Quaternion& i_quat) const;
     inline bool operator!=(const Quaternion& i_quat) const;
 
-    // functions
+    // Functions
     void Invert();
     Quaternion GetInverse() const;
     void Normalize();
     Quaternion GetNormalized() const;
     Vec3D GetForwardVector() const;
 
-    // constants
+    // Constants
     static const Quaternion     IDENTITY;
 
 private:

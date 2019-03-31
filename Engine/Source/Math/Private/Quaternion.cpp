@@ -1,11 +1,12 @@
-#include "Math\Quaternion.h"
+#include "Math/Quaternion.h"
 
 // Library includes
 #include <cmath>
 
 // Engine includes
-#include "Math\MathUtil.h"
-#include "Math\Vec3D.h"
+#include "Math/Euler.h"
+#include "Math/MathUtil.h"
+#include "Math/Vec3D.h"
 
 namespace engine {
 namespace math {
@@ -28,6 +29,28 @@ Quaternion::Quaternion(float i_w, float i_x, float i_y, float i_z) : w_(i_w),
     y_(i_y),
     z_(i_z)
 {
+    ASSERT(!IsNaN(w_) && !IsNaN(x_) && !IsNaN(y_) && !IsNaN(z_));
+}
+
+Quaternion::Quaternion(const Euler& i_euler)
+{
+    // https://www.euclideanspace.com/maths/geometry/rotations/conversions/eulerToQuaternion/index.htm
+
+    const float yaw_by_2 = DegreesToRadians(i_euler.Yaw()) * 0.5f;
+    const float pitch_by_2 = DegreesToRadians(i_euler.Pitch()) * 0.5f;
+    const float roll_by_2 = DegreesToRadians(i_euler.Roll()) * 0.5f;
+    const float sy = std::sinf(yaw_by_2);
+    const float cy = std::cosf(yaw_by_2);
+    const float sp = std::sinf(pitch_by_2);
+    const float cp = std::cosf(pitch_by_2);
+    const float sr = std::sinf(roll_by_2);
+    const float cr = std::cosf(roll_by_2);
+
+    w_ = cy * cr * cp - sy * sr * sp;
+    x_ = sy * sr * cp + cy * cr * sp;
+    y_ = sy * cr * cp + cy * sr * sp;
+    z_ = cy * sr * cp - sy * cr * sp;
+
     ASSERT(!IsNaN(w_) && !IsNaN(x_) && !IsNaN(y_) && !IsNaN(z_));
 }
 

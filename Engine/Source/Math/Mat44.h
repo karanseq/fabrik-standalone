@@ -8,6 +8,7 @@ namespace engine {
 namespace math {
 
 // Forward declarations
+class Euler;
 class Quaternion;
 class Vec3D;
 
@@ -20,6 +21,7 @@ public:
                    float i_20, float i_21, float i_22, float i_23,
                    float i_30, float i_31, float i_32, float i_33);
     explicit Mat44(const Quaternion& i_rotation, const Vec3D& i_translation);
+    explicit Mat44(const Euler& i_rotation, const Vec3D& i_translation);
     ~Mat44();
 
     void Set(float i_00, float i_01, float i_02, float i_03,
@@ -67,6 +69,7 @@ public:
 
     // rotation matrices
     static Mat44 GetRotation(const Quaternion& i_rotation);
+    static Mat44 GetRotation(const Euler& i_euler);
     static Mat44 GetRotationX(const float i_radians);
     static Mat44 GetRotationY(const float i_radians);
     static Mat44 GetRotationZ(const float i_radians);

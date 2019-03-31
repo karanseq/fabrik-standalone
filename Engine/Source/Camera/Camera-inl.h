@@ -41,34 +41,24 @@ inline const math::Mat44& Camera::GetPerspectiveProjection() const
     return perspective_projection_;
 }
 
-inline const math::Transform& Camera::GetTransform() const
-{
-    return transform_;
-}
-
-inline void Camera::SetTransform(const math::Transform& i_transform)
-{
-    transform_ = i_transform;
-}
-
 inline const math::Vec3D& Camera::GetPosition() const
 {
-    return transform_.GetPosition();
+    return position_;
 }
 
-inline void Camera::SetPosition(engine::math::Vec3D& i_position)
+inline void Camera::SetPosition(math::Vec3D& i_position)
 {
-    transform_.SetPosition(i_position);
+    position_ = i_position;
 }
 
 inline const math::Quaternion& Camera::GetRotation() const
 {
-    return transform_.GetRotation();
+    return rotation_;
 }
 
-inline void Camera::SetRotation(engine::math::Quaternion& i_rotation)
+inline void Camera::SetRotation(math::Quaternion& i_rotation)
 {
-    transform_.SetRotation(i_rotation);
+    rotation_ = i_rotation;
 }
 
 } // namespace graphics

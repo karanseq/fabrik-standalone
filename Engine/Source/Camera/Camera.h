@@ -4,15 +4,10 @@
 // Engine includes
 #include "Math/Mat44.h"
 #include "Math/MathUtil.h"
-#include "Math/Transform.h"
+#include "Math/Quaternion.h"
+#include "Math/Vec3D.h"
 
 // Forward declarations
-namespace engine {
-namespace math {
-    class Quaternion;
-    class Vec3D;
-}
-}
 
 namespace engine {
 namespace graphics {
@@ -35,14 +30,11 @@ public:
 
     inline const math::Mat44& GetPerspectiveProjection() const;
 
-    inline const math::Transform& GetTransform() const;
-    inline void SetTransform(const math::Transform& i_transform);
-
     inline const math::Vec3D& GetPosition() const;
-    inline void SetPosition(engine::math::Vec3D& i_position);
+    inline void SetPosition(math::Vec3D& i_position);
 
     inline const math::Quaternion& GetRotation() const;
-    inline void SetRotation(engine::math::Quaternion& i_rotation);
+    inline void SetRotation(math::Quaternion& i_rotation);
 
     static constexpr float DEFAULT_FOV = float(math::PI) * 0.25f;
     static constexpr float DEFAULT_ASPECT_RATIO = 1.0f;
@@ -54,7 +46,8 @@ private:
 
 private:
     math::Mat44         perspective_projection_;
-    math::Transform     transform_;
+    math::Vec3D         position_;
+    math::Quaternion    rotation_;
     float               fov_ = DEFAULT_FOV;
     float               aspect_ratio_ = DEFAULT_ASPECT_RATIO;
     float               near_plane_ = DEFAULT_NEAR_PLANE;

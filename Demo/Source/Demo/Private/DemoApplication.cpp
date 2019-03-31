@@ -33,7 +33,7 @@ engine::graphics::CameraController g_camera_controller;
 
 constexpr uint8_t g_num_cubes = 9;
 engine::graphics::Mesh g_cube;
-engine::math::Transform g_cube_transforms[g_num_cubes];
+engine::math::Transform g_cube_transforms[g_num_cubes * g_num_cubes];
 
 bool DemoApplication::Init()
 {
@@ -58,17 +58,18 @@ bool DemoApplication::Init()
     {
         g_camera = new engine::graphics::Camera();
         g_camera->Initialize(engine::graphics::Camera::DEFAULT_FOV, float(window_width_) / float(window_height_));
-        engine::math::Transform camera_transform = g_camera->GetTransform();
-        camera_transform.SetPosition(engine::math::Vec3D(0.0f, 0.0f, -10.0f));
-        g_camera->SetTransform(camera_transform);
-
+        g_camera->SetPosition(engine::math::Vec3D(0.0f, 0.0f, -10.0f));
         g_camera_controller.SetCamera(g_camera);
     }
 
-    g_cube.Initialize("");
-    for (uint8_t i = 0; i < g_num_cubes; ++i)
+    // Initialize the shapes
     {
-        g_cube_transforms[i].SetPosition(engine::math::Vec3D(i % 3 * 2.5f, i / 3 * 2.5f, 0.0f));
+        constexpr float offset = 7.0f;
+        g_cube.Initialize("");
+        for (uint8_t i = 0; i < g_num_cubes * g_num_cubes; ++i)
+        {
+            g_cube_transforms[i].SetPosition(engine::math::Vec3D(i % g_num_cubes * offset, 0.0f, i / g_num_cubes * -offset));
+        }
     }
 
     engine::time::Updater::Get()->AddTickable(this);

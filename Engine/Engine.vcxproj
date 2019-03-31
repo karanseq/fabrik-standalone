@@ -358,6 +358,8 @@
     <ClInclude Include="Source\Input\InputTypes.h" />
     <ClInclude Include="Source\Logger\Logger.h" />
     <ClInclude Include="Source\Math\AABB.h" />
+    <ClInclude Include="Source\Math\Euler-inl.h" />
+    <ClInclude Include="Source\Math\Euler.h" />
     <ClInclude Include="Source\Math\Mat44-inl.h" />
     <ClInclude Include="Source\Math\Mat44.h" />
     <ClInclude Include="Source\Math\MathUtil.h" />
@@ -417,6 +419,7 @@
     <ClCompile Include="Source\Input\Private\InputProcessor.cpp" />
     <ClCompile Include="Source\Logger\Private\Logger.win32.cpp" />
     <ClCompile Include="Source\Math\Private\AABB.cpp" />
+    <ClCompile Include="Source\Math\Private\Euler.cpp" />
     <ClCompile Include="Source\Math\Private\Mat44.cpp" />
     <ClCompile Include="Source\Math\Private\MathUtil.cpp" />
     <ClCompile Include="Source\Math\Private\Quaternion.cpp" />

@@ -5,9 +5,10 @@
 #include "Events/KeyboardEvent.h"
 #include "Events/MouseButtonEvent.h"
 #include "Input/InputProcessor.h"
+#include "Math/Euler.h"
 #include "Math/MathUtil.h"
-#include "Math/Vec3D.h"
 #include "Math/Quaternion.h"
+#include "Math/Vec3D.h"
 #include "Time/Updater.h"
 
 namespace engine {
@@ -20,21 +21,9 @@ void CameraController::Tick(float dt)
         return;
     }
 
-    // Update position
-    {
-        static constexpr float move_speed = 0.1f;
-        const math::Vec3D camera_delta(
-            (is_left_pressed_ ? move_speed : (is_right_pressed_ ? -move_speed : 0.0f)),
-            (is_up_pressed_ ? -move_speed : (is_down_pressed_ ? move_speed : 0.0f)),
-            (is_forward_pressed_ ? move_speed : (is_back_pressed_ ? -move_speed : 0.0f))
-        );
-
-        camera_->SetPosition(camera_->GetPosition() + camera_delta);
-    }
-
     // Update rotation
     {
-        static constexpr float rotate_speed = 0.001f;
+        static constexpr float rotate_speed = 0.1f;
 
         input::InputProcessor* input_processor = input::InputProcessor::Get();
         ASSERT(input_processor);
@@ -42,22 +31,25 @@ void CameraController::Tick(float dt)
         const float mouse_motion_x = float(input_processor->GetCurrentMouseX() - input_processor->GetPreviousMouseX());
         const float mouse_motion_y = float(input_processor->GetCurrentMouseY() - input_processor->GetPreviousMouseY());
 
-        math::Quaternion new_rotation = camera_->GetRotation();
-        if (math::IsZero(mouse_motion_x) == false)
-        {
-            const math::Quaternion yaw_delta(-rotate_speed * mouse_motion_x, math::Vec3D::UNIT_Y);
-            new_rotation *= yaw_delta;
-            new_rotation.Normalize();
-        }
+        math::Euler rotation_delta;
+        rotation_delta.Yaw(math::IsZero(mouse_motion_x) ? 0.0f : (rotate_speed * -mouse_motion_x));
+        rotation_delta.Pitch(math::IsZero(mouse_motion_y) ? 0.0f : (rotate_speed * -mouse_motion_y));
 
-        if (math::IsZero(mouse_motion_y) == false)
-        {
-            const math::Quaternion pitch_delta(-rotate_speed * mouse_motion_y, math::Vec3D::UNIT_X);
-            new_rotation *= pitch_delta;
-            new_rotation.Normalize();
-        }
+        const math::Quaternion new_rotation = camera_->GetRotation() * math::Quaternion(rotation_delta).GetNormalized();
+        camera_->SetRotation(new_rotation.GetNormalized());
+    }
 
-        camera_->SetRotation(new_rotation);
+    // Update position
+    {
+        static constexpr float move_speed = 0.1f;
+        math::Vec3D camera_delta(
+            (is_left_pressed_ ? move_speed : (is_right_pressed_ ? -move_speed : 0.0f)),
+            (is_up_pressed_ ? -move_speed : (is_down_pressed_ ? move_speed : 0.0f)),
+            (is_forward_pressed_ ? move_speed : (is_back_pressed_ ? -move_speed : 0.0f))
+        );
+        camera_delta = RotateBy(camera_delta, camera_->GetRotation());
+
+        camera_->SetPosition(camera_->GetPosition() + camera_delta);
     }
 }
 

@@ -9,6 +9,7 @@ namespace math {
 
 // forward declarations
 struct AABB;
+class Euler;
 class Mat44;
 class Quaternion;
 class Transform;
@@ -25,6 +26,8 @@ constexpr double        PI = 3.14159265358979323846;
 constexpr float         MIN_EPSILON = 1.0e-9f;
 constexpr float         MAX_EPSILON = 1.0e-3f;
 
+// Angles
+
 inline float RadiansToDegrees(float i_radians)
 {
     return (i_radians * 180.0f / float(PI));
@@ -35,6 +38,14 @@ inline float DegreesToRadians(float i_degrees)
     return (i_degrees * float(PI) / 180.0f);
 }
 
+inline float ClampAngleDegrees(float i_degrees)
+{
+    const float mod = std::fmod(i_degrees, 360.0f);
+    return (mod < 0.0f ? mod + 360.0f : mod);
+}
+
+// Floats
+
 inline bool IsNaN(float i_number)
 {
     volatile float temp = i_number;
@@ -43,7 +54,7 @@ inline bool IsNaN(float i_number)
 
 inline bool FuzzyEquals(float i_lhs, float i_rhs, float i_epsilon = MAX_EPSILON)
 {
-    return fabs(i_rhs - i_lhs) < i_epsilon;
+    return std::fabs(i_rhs - i_lhs) < i_epsilon;
 }
 
 inline bool IsZero(float i_number)
@@ -71,7 +82,7 @@ inline float GetMaxOfFour(float i_first, float i_second, float i_third, float i_
     return first_two > last_two ? first_two : last_two;
 }
 
-// Dot products
+// Dot product
 float DotProduct(const Vec2D& i_v1, const Vec2D& i_v2);
 float DotProduct(const Vec3D& i_v1, const Vec3D& i_v2);
 float DotProduct(const engine::math::optimized::Vec3D& i_v1, const engine::math::optimized::Vec3D& i_v2);
@@ -80,6 +91,10 @@ float DotProduct(const Quaternion& i_q1, const Quaternion& i_q2);
 // Cross product
 Vec3D CrossProduct(const Vec3D& i_v1, const Vec3D& i_v2);
 engine::math::optimized::Vec3D CrossProduct(const engine::math::optimized::Vec3D& i_v1, const engine::math::optimized::Vec3D& i_v2);
+
+// Rotations
+Vec3D RotateBy(const Vec3D& i_vector, const Quaternion& i_quat);
+Vec3D RotateBy(const Vec3D& i_vector, const Euler& i_euler);
 
 // Transforms
 // the transform matrix as a result of this function must be left multiplied
