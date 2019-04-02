@@ -19,7 +19,7 @@ public:
     Euler() = default;
     explicit Euler(float i_degrees);
     explicit Euler(float i_yaw, float i_pitch, float i_roll);
-    explicit Euler(const Quaternion& i_quat);
+    explicit Euler(const Quaternion& i_quat, bool i_ignore_roll = false);
 
     ~Euler() = default;
 
@@ -29,7 +29,7 @@ public:
     inline float Pitch() const;
     inline void Pitch(float i_pitch);
     inline float Roll() const;
-    inline float Roll(float i_roll);
+    inline void Roll(float i_roll);
     inline void Set(float i_yaw, float i_pitch, float i_roll);
 
     // Arithmetic

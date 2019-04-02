@@ -22,7 +22,7 @@ Euler::Euler(float i_yaw, float i_pitch, float i_roll) : yaw_(i_yaw),
     ASSERT(!IsNaN(yaw_) && !IsNaN(pitch_) && !IsNaN(roll_));
 }
 
-Euler::Euler(const Quaternion& i_quat)
+Euler::Euler(const Quaternion& i_quat, bool i_ignore_roll /*= false*/)
 {
     // http://www.euclideanspace.com/maths/geometry/rotations/conversions/quaternionToEuler/
 
@@ -33,13 +33,13 @@ Euler::Euler(const Quaternion& i_quat)
     {
         yaw_    = 2.0f * std::atan2f(i_quat.x(), i_quat.w());
         pitch_  = 0.0f;
-        roll_   = float(PI / 2);
+        roll_   = i_ignore_roll ? 0.0f : float(PI / 2);
     }
     else if (singularity_test < -singularity_threshold)
     {
         yaw_    = -2.0f * std::atan2f(i_quat.x(), i_quat.w());
         pitch_  = 0.0f;
-        roll_   = float(PI / 2);
+        roll_   = i_ignore_roll ? 0.0f : float(PI / 2);
     }
     else
     {
@@ -48,12 +48,12 @@ Euler::Euler(const Quaternion& i_quat)
         const float zsq = i_quat.z() * i_quat.z();
         yaw_    = std::atan2f(2 * i_quat.y() * i_quat.w() - 2 * i_quat.x() * i_quat.z(), 1 - 2 * ysq - 2 * zsq);
         pitch_  = std::atan2f(2 * i_quat.x() * i_quat.w() - 2 * i_quat.y() * i_quat.z(), 1 - 2 * xsq - 2 * zsq);
-        roll_   = std::asinf(2 * singularity_test);
+        roll_   = i_ignore_roll ? 0.0f : std::asinf(2 * singularity_test);
     }
 
     yaw_    = RadiansToDegrees(yaw_);
     pitch_  = RadiansToDegrees(pitch_);
-    roll_   = RadiansToDegrees(roll_);
+    roll_   = i_ignore_roll ? 0.0f : RadiansToDegrees(roll_);
 
     ASSERT(!IsNaN(yaw_) && !IsNaN(pitch_) && !IsNaN(roll_));
 }

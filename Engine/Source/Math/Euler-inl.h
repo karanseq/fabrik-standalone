@@ -35,7 +35,7 @@ inline float Euler::Roll() const
     return roll_;
 }
 
-inline float Euler::Roll(float i_roll)
+inline void Euler::Roll(float i_roll)
 {
     ASSERT(!IsNaN(i_roll));
     roll_ = i_roll;

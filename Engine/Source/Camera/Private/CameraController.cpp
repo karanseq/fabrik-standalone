@@ -16,14 +16,9 @@ namespace graphics {
 
 void CameraController::Tick(float dt)
 {
-    if (mouse_button_pressed_ == false)
+    if (mouse_button_pressed_)
     {
-        return;
-    }
-
-    // Update rotation
-    {
-        static constexpr float rotate_speed = 0.1f;
+        static constexpr float rotate_speed = 0.2f;
 
         input::InputProcessor* input_processor = input::InputProcessor::Get();
         ASSERT(input_processor);
@@ -31,17 +26,21 @@ void CameraController::Tick(float dt)
         const float mouse_motion_x = float(input_processor->GetCurrentMouseX() - input_processor->GetPreviousMouseX());
         const float mouse_motion_y = float(input_processor->GetCurrentMouseY() - input_processor->GetPreviousMouseY());
 
-        math::Euler rotation_delta;
-        rotation_delta.Yaw(math::IsZero(mouse_motion_x) ? 0.0f : (rotate_speed * -mouse_motion_x));
-        rotation_delta.Pitch(math::IsZero(mouse_motion_y) ? 0.0f : (rotate_speed * -mouse_motion_y));
+        math::Euler euler_delta;
+        euler_delta.Yaw(math::IsZero(mouse_motion_x) ? 0.0f : (rotate_speed * -mouse_motion_x));
+        euler_delta.Pitch(math::IsZero(mouse_motion_y) ? 0.0f : (rotate_speed * -mouse_motion_y));
 
-        const math::Quaternion new_rotation = camera_->GetRotation() * math::Quaternion(rotation_delta).GetNormalized();
-        camera_->SetRotation(new_rotation.GetNormalized());
+        if (euler_delta.IsZero() == false)
+        {
+            math::Quaternion new_rotation = camera_->GetRotation() * math::Quaternion(euler_delta);
+            math::Euler euler_no_roll(new_rotation.GetNormalized(), /*i_ignore_roll =*/ true);
+            camera_->SetRotation(math::Quaternion(euler_no_roll));
+        }
     }
 
     // Update position
     {
-        static constexpr float move_speed = 0.1f;
+        static constexpr float move_speed = 0.25f;
         math::Vec3D camera_delta(
             (is_left_pressed_ ? move_speed : (is_right_pressed_ ? -move_speed : 0.0f)),
             (is_up_pressed_ ? -move_speed : (is_down_pressed_ ? move_speed : 0.0f)),
