@@ -55,7 +55,7 @@ Euler::Euler(const Quaternion& i_quat)
     pitch_  = RadiansToDegrees(pitch_);
     roll_   = RadiansToDegrees(roll_);
 
-    Normalize();
+    ASSERT(!IsNaN(yaw_) && !IsNaN(pitch_) && !IsNaN(roll_));
 }
 
 } // namespace math
