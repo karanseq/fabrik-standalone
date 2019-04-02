@@ -31,27 +31,31 @@ Euler::Euler(const Quaternion& i_quat)
 
     if (singularity_test > singularity_threshold)
     {
-        yaw_ = 2.0f * std::atan2f(i_quat.x(), i_quat.w());
-        pitch_ = 0.0f;
-        roll_ = float(PI / 2);
+        yaw_    = 2.0f * std::atan2f(i_quat.x(), i_quat.w());
+        pitch_  = 0.0f;
+        roll_   = float(PI / 2);
     }
     else if (singularity_test < -singularity_threshold)
     {
-        yaw_ = -2.0f * std::atan2f(i_quat.x(), i_quat.w());
-        pitch_ = 0.0f;
-        roll_ = float(PI / 2);
+        yaw_    = -2.0f * std::atan2f(i_quat.x(), i_quat.w());
+        pitch_  = 0.0f;
+        roll_   = float(PI / 2);
     }
     else
     {
         const float xsq = i_quat.x() * i_quat.x();
         const float ysq = i_quat.y() * i_quat.y();
         const float zsq = i_quat.z() * i_quat.z();
-        yaw_ = std::atan2f(2 * i_quat.y() * i_quat.w() - 2 * i_quat.x() * i_quat.z(), 1 - 2 * ysq - 2 * zsq);
-        pitch_ = std::atan2f(2 * i_quat.x() * i_quat.w() - 2 * i_quat.y() * i_quat.z(), 1 - 2 * xsq - 2 * zsq);
-        roll_ = std::asinf(2 * singularity_test);
+        yaw_    = std::atan2f(2 * i_quat.y() * i_quat.w() - 2 * i_quat.x() * i_quat.z(), 1 - 2 * ysq - 2 * zsq);
+        pitch_  = std::atan2f(2 * i_quat.x() * i_quat.w() - 2 * i_quat.y() * i_quat.z(), 1 - 2 * xsq - 2 * zsq);
+        roll_   = std::asinf(2 * singularity_test);
     }
 
-    ASSERT(!IsNaN(yaw_) && !IsNaN(pitch_) && !IsNaN(roll_));
+    yaw_    = RadiansToDegrees(yaw_);
+    pitch_  = RadiansToDegrees(pitch_);
+    roll_   = RadiansToDegrees(roll_);
+
+    Normalize();
 }
 
 } // namespace math
